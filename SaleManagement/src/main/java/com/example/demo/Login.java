@@ -21,7 +21,6 @@ public class Login {
     private String password;
     private String delete_flg;
 
-
     public String getMail_address() {
         return mail_address;
     }

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ public class SaleController {
     }
 
     @PostMapping(value = "/login")
-    public String logincheck(@RequestParam("mail_address") String mail_address, @RequestParam("password") String password, Model model) {
+    public String logincheck(@RequestParam("mail_address") String mail_address, @RequestParam("password") String password, Model model, SaleRequest saleRequest) {
 
     	Optional<Login> user = saleService.findOne(mail_address);
     	if(user.isPresent()) {
     		if(user.get().getPassword().equals(password)) {
+    	    	List<Client> list = saleService.selectAll();
+    	        model.addAttribute("list", list);
     			return "main";
     		}else {
             	model.addAttribute("mail_address",  mail_address);

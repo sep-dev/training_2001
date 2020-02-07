@@ -53,6 +53,30 @@
 					<th colspan=2></th>
 				</tr>
 			</thead>
+
+			<tbody>
+	            <tr th:each="emp : ${list}" th:object="${emp}">
+	                <td th:text="*{no}"/>
+	                <td th:text="*{client}"/>
+	                <td th:text="*{order_date}"/>
+	                <td th:text="*{s_number}"/>
+	                <td th:text="*{subject}"/>
+	                <td th:text="*{quantity}"/>
+<!--                 <td th:text="*{delivery_date}"/>
+	                <br th:text="*{due_date}"/> -->
+	                <td>
+	                <span th:text="*{delivery_date}"></span>
+	                <br>
+	                <th:block th:text="*{due_date}"/>
+	                </td>
+	                <td th:text="*{billing_date}"/>
+	                <td th:text="*{estimated_amount}"/>
+	                <td th:text="*{order_amount}"/>
+	                <td th:text="*{status_number}"/>
+	                <td><form th:action="@{/edit/{id}(id=*{id})}"><input type="submit" value="編集"></form></td>
+	                <td><form th:action="@{/delete/{id}(id=*{id})}"><input type="submit" value="削除"></form></td>
+	            </tr>
+            </tbody>
         </table>
 
 		<!-- ページングボタン -->
@@ -67,7 +91,7 @@
 		<a href="#">&gt;&gt;</a>
 
 	   	<!-- 登録ボタン -->
-		<form action="#" method="post">
+		<form action="#">
 			<p><input type="submit" value="新規登録"></p>
 		</form>
     </body>
