@@ -70,8 +70,11 @@
 	                <th:block th:text="*{due_date}"/>
 	                </td>
 	                <td th:text="*{billing_date}"/>
-	                <td th:text="*{estimated_amount}"/>
-	                <td th:text="*{order_amount}"/>
+	                <td>
+	                <span th:text="*{estimated_amount}"></span>
+	                <br>
+	                <th:block th:text="*{order_amount}"/>
+	                </td>
 	                <td th:text="*{status_number}"/>
 	                <td><form th:action="@{/edit/{id}(id=*{id})}"><input type="submit" value="編集"></form></td>
 	                <td><form th:action="@{/delete/{id}(id=*{id})}"><input type="submit" value="削除"></form></td>
