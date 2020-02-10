@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>登録</title>
+    	<link href="/main.css" rel="stylesheet"></link>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+
+		<h4>製造部売上管理システム：案件登録</h4>
+
+		<form action="/check"  method="post">
+			<p><span class="fit">顧客*</span>:&emsp;<select name="client">
+			<option value="TEST製作所">TEST製作所</option>
+			<option value="TEST製作所">TEST製作所</option>
+			<option value="TEST製作所">TEST製作所</option>
+			<option value="TEST製作所">TEST製作所</option>
+			<option value="TEST製作所">TEST製作所</option>
+			</select></p>
+			<p><span class="fit">受注日</span>:&emsp;<input type="text" name="order_date"></p>
+			<p><span class="fit">S番号</span>:&emsp;<input type="text" name="s_number"></p>
+			<p><span class="fit">件名*</span>:&emsp;<input type="text" name="subject"></p>
+			<p><span class="fit">数量</span>:&emsp;<input type="text" name="quantity"></p>
+			<p><span class="fit">納入指定日</span>:&emsp;<input type="text" name="delivery_date"></p>
+			<p><span class="fit">納入日</span>:&emsp;<input type="text" name="due_date"></p>
+			<p><span class="fit">請求日</span>:&emsp;<input type="text" name="billing_date"></p>
+			<p><span class="fit">見積金額</span>:&emsp;<input type="text" name="estimated_amount"></p>
+			<p><span class="fit">受注金額</span>:&emsp;<input type="text" name="order_amount"></p>
+			<p><span class="fit">ステータス</span>:&emsp;
+			<select name="status_number">
+			<option value="1">請求済み</option>
+			<option value="2">納入済み</option>
+			<option value="3">見積済み</option>
+			<option value="4">製造着手</option>
+			<option value="5">製造完了</option>
+			<option value="6">受注</option>
+			</select></p>
+			<p><span class="fit">備考</span>:&emsp;<input type="text" name="remarks"></p>
+			<p><input  type="submit" value="確認" class="btn"><input onclick="history.back()" type="button" value="戻る" class="btn"></p>
+		</form>
+	</body>
+</html>

@@ -21,7 +21,10 @@ public class SaleController {
     }
 
     @PostMapping(value = "/login")
-    public String logincheck(@RequestParam("mail_address") String mail_address, @RequestParam("password") String password, Model model, SaleRequest saleRequest) {
+    public String logincheck(@RequestParam("mail_address") String mail_address,
+    		@RequestParam("password") String password,
+    		Model model,
+    		SaleRequest saleRequest) {
 
     	Optional<Login> user = saleService.findOne(mail_address);
     	if(user.isPresent()) {
@@ -30,7 +33,8 @@ public class SaleController {
     	        model.addAttribute("list", list);
     			return "main";
     		}else {
-            	model.addAttribute("mail_address",  mail_address);
+            	model.addAttribute("mail_address",
+            			mail_address);
             	model.addAttribute("password",  password);
             	return "login";
     		}
@@ -53,5 +57,52 @@ public class SaleController {
         	model.addAttribute("password",  password);
         	return "login";
     	}*/
+    }
+
+    @PostMapping(value="/insert")
+    public String insert(Model model) {
+        model.addAttribute("saleRequest", new SaleRequest());
+    	return "add";
+    }
+
+    @PostMapping(value="/check")
+    public String check(@RequestParam("client") String client,
+    		@RequestParam("order_date") String order_date,
+    		@RequestParam("s_number") String s_number,
+    		@RequestParam("subject") String subject,
+    		@RequestParam("quantity") String quantity,
+    		@RequestParam("delivery_date") String delivery_date,
+    		@RequestParam("due_date") String due_date,
+    		@RequestParam("billing_date") String billing_date,
+    		@RequestParam("estimated_amount") String estimated_amount,
+    		@RequestParam("order_amount") String order_amount,
+    		@RequestParam("status_number") String status_number,
+    		@RequestParam("remarks") String remarks,
+    		Model model ,
+    		SaleRequest saleRequest) {
+    	model.addAttribute("client",  client);
+    	model.addAttribute("order_date",  order_date);
+    	model.addAttribute("s_number",  s_number);
+    	model.addAttribute("subject",  subject);
+    	model.addAttribute("quantity",  quantity);
+    	model.addAttribute("delivery_date",  delivery_date);
+    	model.addAttribute("due_date",  due_date);
+    	model.addAttribute("billing_date",  billing_date);
+    	model.addAttribute("estimated_amount",  estimated_amount);
+    	model.addAttribute("order_amount",  order_amount);
+    	model.addAttribute("status_number",  status_number);
+    	model.addAttribute("remarks",  remarks);
+    	return "addcheck";
+    }
+
+    @PostMapping(value = "/checkok")
+    public String create(Model model,
+    		SaleRequest saleRequest) {
+    	saleService.create(saleRequest);
+
+    	List<Client> list = saleService.selectAll();
+        model.addAttribute("list", list);
+		return "main";
+
     }
 }

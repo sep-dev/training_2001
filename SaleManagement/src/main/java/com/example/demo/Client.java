@@ -32,6 +32,8 @@ public class Client {
     private String status_number;
     private String id;
     private String delete_flg;
+    private String remarks;
+
 
     public String getNo() {
         return no;
@@ -102,7 +104,7 @@ public class Client {
     public String getStatus_number() {
         return status_number;
     }
-    public void setStatusnumber(String status_number) {
+    public void setStatus_number(String status_number) {
         this.status_number = status_number;
     }
     public String getId() {
@@ -116,5 +118,11 @@ public class Client {
     }
     public void setDelete_flg(String delete_flg) {
         this.delete_flg = delete_flg;
+    }
+    public String getRemarks() {
+        return remarks;
+    }
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

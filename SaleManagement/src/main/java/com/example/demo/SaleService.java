@@ -23,4 +23,25 @@ public class SaleService {
 	public List<Client> selectAll() {
 		return displayRepository.findAll();
 	}
+
+	public void create(SaleRequest saleRequest) {
+
+		Client customer = new Client();
+		customer.setClient(saleRequest.getClient());
+		customer.setOrder_date(saleRequest.getOrder_date());
+		customer.setS_number(saleRequest.getS_number());
+		customer.setSubject(saleRequest.getSubject());
+		customer.setQuantity(saleRequest.getQuantity());
+		customer.setDelivery_date(saleRequest.getDelivery_date());
+		customer.setDue_date(saleRequest.getDue_date());
+		customer.setBilling_date(saleRequest.getBilling_date());
+		customer.setEstimated_amount(saleRequest.getEstimated_amount());
+		customer.setOrder_amount(saleRequest.getOrder_amount());
+		customer.setStatus_number(saleRequest.getStatus_number());
+		customer.setRemarks(saleRequest.getRemarks());
+		customer.setId("1");
+		customer.setDelete_flg("0");
+
+		displayRepository.save(customer);
+	}
 }
