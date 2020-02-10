@@ -55,19 +55,22 @@
 			</thead>
 
 			<tbody>
-	            <tr th:each="emp : ${list}" th:object="${emp}">
+	            <tr th:each="cus : ${list}" th:object="${cus}">
 	                <td th:text="*{no}"/>
 	                <td th:text="*{client}"/>
-	                <td th:text="*{order_date}"/>
+	                <td th:if='${cus.order_date!=""}' th:text="*{order_date.substring(0,4)} + '/' + *{order_date.substring(4,6)} + '/' + *{order_date.substring(6,8)}"></td>
+	                <td th:if='${cus.order_date==""}' th:text="-"></td>
 	                <td th:text="*{s_number}"/>
 	                <td th:text="*{subject}"/>
 	                <td th:text="*{quantity}"/>
 <!--                 <td th:text="*{delivery_date}"/>
 	                <br th:text="*{due_date}"/> -->
 	                <td>
-	                <span th:text="*{delivery_date}"></span>
+	                <span th:if='${cus.delivery_date!=""}' th:text="*{delivery_date.substring(0,4)} + '/' + *{delivery_date.substring(4,6)} + '/' + *{delivery_date.substring(6,8)}"></span>
+	                <span th:if='${cus.delivery_date==""}' th:text="-"></span>
 	                <br>
-	                <th:block th:text="*{due_date}"/>
+	                <th:block th:if='${cus.due_date!=""}' th:text="*{due_date.substring(0,4)} + '/' + *{due_date.substring(4,6)} + '/' + *{due_date.substring(6,8)}"/>
+	                <th:block th:if='${cus.due_date==""}' th:text="-">
 	                </td>
 	                <td th:text="*{billing_date}"/>
 	                <td>
@@ -94,7 +97,7 @@
 		<a href="#">&gt;&gt;</a>
 
 	   	<!-- 登録ボタン -->
-		<form action="#">
+		<form action="/insert" method="post">
 			<p><input type="submit" value="新規登録"></p>
 		</form>
     </body>

@@ -28,13 +28,13 @@ public class SaleService {
 
 		Client customer = new Client();
 		customer.setClient(saleRequest.getClient());
-		customer.setOrder_date(saleRequest.getOrder_date());
+		customer.setOrder_date(saleRequest.getOrder_date().replace("/",""));
 		customer.setS_number(saleRequest.getS_number());
 		customer.setSubject(saleRequest.getSubject());
 		customer.setQuantity(saleRequest.getQuantity());
-		customer.setDelivery_date(saleRequest.getDelivery_date());
-		customer.setDue_date(saleRequest.getDue_date());
-		customer.setBilling_date(saleRequest.getBilling_date());
+		customer.setDelivery_date(saleRequest.getDelivery_date().replace("/",""));
+		customer.setDue_date(saleRequest.getDue_date().replace("/",""));
+		customer.setBilling_date(saleRequest.getBilling_date().replace("/",""));
 		customer.setEstimated_amount(saleRequest.getEstimated_amount());
 		customer.setOrder_amount(saleRequest.getOrder_amount());
 		customer.setStatus_number(saleRequest.getStatus_number());
