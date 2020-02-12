@@ -11,7 +11,7 @@
 
 		<form action="/checkedit" th:object="${list}"  method="post">
 			<input th:field="*{no}" type="hidden">
-            <p><span class="fit">顧客</span>:&emsp;<input th:text="*{client}" type="hidden"></p>
+            <p><span class="fit">顧客</span>:&emsp;<input th:text="*{client}" type="hidden">;<input th:field="*{client}" type="hidden"></p>
             <p><span class="fit">受注日</span>:&emsp;<input th:field="*{order_date}" pattern="\d{4}/\d{2}/\d{2}" title="受注日は「YYYY/MM/DD」の形式で入力してください。"></p>
             <p><span class="fit">S番号</span>:&emsp;S-<input th:field="*{s_number}" pattern="\d{4}" title="S番号は「S-」を除いた半角4文字で入力してください。"></p>
             <p><span class="fit">件名*</span>:&emsp;<input th:field="*{subject}" pattern=".{1,40}" required title="件名は全角40文字以内で入力してください。"></p>

@@ -224,4 +224,41 @@ public class SaleController {
         model.addAttribute("list", list);
     	return "edit";
     }
+
+	/**
+	 * 編集確認画面へ遷移
+	 *
+	 * @param saleRequest
+	 */
+    @PostMapping(value="/checkedit")
+    public String edit(@RequestParam("no") String no,
+    		@RequestParam("client") String client,
+    		@RequestParam("order_date") String order_date,
+    		@RequestParam("s_number") String s_number,
+    		@RequestParam("subject") String subject,
+    		@RequestParam("quantity") String quantity,
+    		@RequestParam("delivery_date") String delivery_date,
+    		@RequestParam("due_date") String due_date,
+    		@RequestParam("billing_date") String billing_date,
+    		@RequestParam("estimated_amount") String estimated_amount,
+    		@RequestParam("order_amount") String order_amount,
+    		@RequestParam("status_number") String status_number,
+    		@RequestParam("remarks") String remarks,
+    		Model model,
+    		SaleRequest saleRequest) {
+    	model.addAttribute("no",  no);
+    	model.addAttribute("client",  client);
+    	model.addAttribute("order_date",  order_date);
+    	model.addAttribute("s_number",  s_number);
+    	model.addAttribute("subject",  subject);
+    	model.addAttribute("quantity",  quantity);
+    	model.addAttribute("delivery_date",  delivery_date);
+    	model.addAttribute("due_date",  due_date);
+    	model.addAttribute("billing_date",  billing_date);
+    	model.addAttribute("estimated_amount",  estimated_amount);
+    	model.addAttribute("order_amount",  order_amount);
+    	model.addAttribute("status_number",  status_number);
+    	model.addAttribute("remarks",  remarks);
+    	return "editcheck";
+	}
 }
