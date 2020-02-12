@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>確認</title>
+		<title>案件編集確認</title>
 		<link href="/main.css" rel="stylesheet"></link>
 		<meta charset="UTF-8">
 	</head>
 	<body>
 
-		<h4>編集確認</h4>
+		<h4>製造部売上管理システム：案件編集</h4>
 
 		<form action="/editcheckok" th:object="${saleRequest}"  method="post">
 			<input th:field="*{no}" type="hidden">
@@ -22,7 +22,7 @@
 			<input th:field="*{billing_date}" type="hidden"><span class="fit">請求日</span>:&emsp; <a th:text="${billing_date}"></a><br>
 			<input th:field="*{estimated_amount}" type="hidden"><span class="fit">見積金額</span>:&emsp; <a th:if='${estimated_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(estimated_amount, 3, 'COMMA')}"></a>
 			<a th:if='${estimated_amount==""}' th:text="${estimated_amount}"></a><br>
-			<input th:field="*{order_amount}" type="hidden"><span class="fit">受注金額</span>:&emsp; <a th:if='${order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(order_amount, 3, 'COMMA')}"></a><br>
+			<input th:field="*{order_amount}" type="hidden"><span class="fit">受注金額</span>:&emsp; <a th:if='${order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(order_amount, 3, 'COMMA')}"></a>
 			<a th:if='${order_amount==""}' th:text="${order_amount}"></a><br>
 			<input th:field="*{status_number}" type="hidden"><span class="fit">ステータス</span>:&emsp; <a th:text="${status_number}"></a><br>
 			<input th:field="*{remarks}" type="hidden"><span class="fit">備考</span>:&emsp; <a th:text="${remarks}"></a><br>
