@@ -261,4 +261,21 @@ public class SaleController {
     	model.addAttribute("remarks",  remarks);
     	return "editcheck";
 	}
+
+    /**
+     * 編集処理
+     *
+     * @param model
+     * @param saleRequest
+     * @return
+     */
+    @PostMapping(value="/editcheckok")
+    public String editok(Model model ,SaleRequest saleRequest) {
+    	saleService.edit(saleRequest);
+
+    	List<Client> list = saleService.selectAll();
+        model.addAttribute("list", list);
+
+    	return "main";
+    }
 }
