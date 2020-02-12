@@ -210,4 +210,18 @@ public class SaleController {
 
     	return "main";
     }
+
+    /**
+     * 編集画面へ遷移
+     *
+     * @param no
+     * @param model
+     * @return
+     */
+    @PostMapping(value="/edit/{no}")
+    public String edit(@PathVariable String no, Model model) {
+        Client list=saleService.getOne(no);
+        model.addAttribute("list", list);
+    	return "edit";
+    }
 }
