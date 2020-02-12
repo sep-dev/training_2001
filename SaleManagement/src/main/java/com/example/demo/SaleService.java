@@ -44,4 +44,8 @@ public class SaleService {
 
 		displayRepository.save(customer);
 	}
+
+	public Client getOne(String no) {
+		return displayRepository.getOne(no);
+	}
 }
