@@ -17,13 +17,30 @@ public class SaleService {
 	private final SaleRepository saleRepository;
 	private final DisplayRepository displayRepository;
 
+	/**
+	 * ログイン情報取得
+	 *
+	 * @param mail_address
+	 * @return
+	 */
 	public  Optional<Login> findOne(String mail_address) {
 		return saleRepository.findById(mail_address);
 	}
+
+	/**
+	 * テーブル取得
+	 *
+	 * @return
+	 */
 	public List<Client> selectAll() {
 		return displayRepository.findAll();
 	}
 
+	/**
+	 * ユーザー情報登録
+	 *
+	 * @param saleRequest
+	 */
 	public void create(SaleRequest saleRequest) {
 
 		Client customer = new Client();
@@ -45,10 +62,21 @@ public class SaleService {
 		displayRepository.save(customer);
 	}
 
+	/**
+	 * 該当Noのデータ1件取得
+	 *
+	 * @param no
+	 * @return
+	 */
 	public Client getOne(String no) {
 		return displayRepository.getOne(no);
 	}
 
+	/**
+	 * 該当ユーザーデータの削除
+	 *
+	 * @param saleRequest
+	 */
 	public void delete(SaleRequest saleRequest) {
 
 		Client customer = new Client();

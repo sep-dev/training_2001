@@ -16,11 +16,25 @@ public class SaleController {
     @Autowired
     SaleService saleService;
 
+    /**
+     * ログイン画面表示
+     *
+     * @return
+     */
     @GetMapping(value = "/sale")
     public String login() {
         return "login";
     }
 
+    /**
+     * パスワードの照合・メインページへ遷移
+     *
+     * @param mail_address
+     * @param password
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value = "/login")
     public String logincheck(@RequestParam("mail_address") String mail_address,
     		@RequestParam("password") String password,
@@ -28,11 +42,14 @@ public class SaleController {
     		SaleRequest saleRequest) {
 
     	Optional<Login> user = saleService.findOne(mail_address);
+    	//メールアドレスが存在した場合
     	if(user.isPresent()) {
+    		//パスワードが正しい場合
     		if(user.get().getPassword().equals(password)) {
     	    	List<Client> list = saleService.selectAll();
     	        model.addAttribute("list", list);
     			return "main";
+    			//パスワードが異なる場合
     		}else {
             	model.addAttribute("mail_address",
             			mail_address);
@@ -40,15 +57,41 @@ public class SaleController {
             	return "login";
     		}
     	}
+    	//メールアドレスが存在しない場合
     	return "login";
     }
 
+    /**
+     * 新規登録画面へ遷移
+     *
+     * @param model
+     * @return
+     */
     @PostMapping(value="/insert")
     public String insert(Model model) {
         model.addAttribute("saleRequest", new SaleRequest());
     	return "add";
     }
 
+    /**
+     * 新規登録確認画面へ遷移
+     *
+     * @param client
+     * @param order_date
+     * @param s_number
+     * @param subject
+     * @param quantity
+     * @param delivery_date
+     * @param due_date
+     * @param billing_date
+     * @param estimated_amount
+     * @param order_amount
+     * @param status_number
+     * @param remarks
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value="/check")
     public String check(@RequestParam("client") String client,
     		@RequestParam("order_date") String order_date,
@@ -79,6 +122,13 @@ public class SaleController {
     	return "addcheck";
     }
 
+    /**
+     * 新規登録処理・メインページへ遷移
+     *
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value = "/checkok")
     public String create(Model model,
     		SaleRequest saleRequest) {
@@ -90,6 +140,13 @@ public class SaleController {
 
     }
 
+    /**
+     * 削除画面へ遷移
+     *
+     * @param no
+     * @param model
+     * @return
+     */
     @PostMapping(value="/delete/{no}")
     public String delete(@PathVariable String no, Model model) {
         Client list = saleService.getOne(no);
@@ -97,6 +154,26 @@ public class SaleController {
     	return "delete";
     }
 
+    /**
+     * 論理削除処理
+     *
+     * @param no
+     * @param client
+     * @param order_date
+     * @param s_number
+     * @param subject
+     * @param quantity
+     * @param delivery_date
+     * @param due_date
+     * @param billing_date
+     * @param estimated_amount
+     * @param order_amount
+     * @param status_number
+     * @param remarks
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value="/delete")
     public String deleteok(@RequestParam("no") String no,
     		@RequestParam("client") String client,
