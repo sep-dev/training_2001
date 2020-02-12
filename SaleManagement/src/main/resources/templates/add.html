@@ -10,22 +10,23 @@
 		<h4>製造部売上管理システム：案件登録</h4>
 
 		<form action="/check"  method="post">
-			<p><span class="fit">顧客*</span>:&emsp;<select name="client">
+			<p><span class="fit">顧客*</span>:&emsp;
+			<select name="client">
 			<option value="TEST製作所">TEST製作所</option>
 			<option value="TEST製作所">TEST製作所</option>
 			<option value="TEST製作所">TEST製作所</option>
 			<option value="TEST製作所">TEST製作所</option>
 			<option value="TEST製作所">TEST製作所</option>
 			</select></p>
-			<p><span class="fit">受注日</span>:&emsp;<input type="text" name="order_date"></p>
-			<p><span class="fit">S番号</span>:&emsp;<input type="text" name="s_number"></p>
-			<p><span class="fit">件名*</span>:&emsp;<input type="text" name="subject"></p>
-			<p><span class="fit">数量</span>:&emsp;<input type="text" name="quantity"></p>
-			<p><span class="fit">納入指定日</span>:&emsp;<input type="text" name="delivery_date"></p>
-			<p><span class="fit">納入日</span>:&emsp;<input type="text" name="due_date"></p>
-			<p><span class="fit">請求日</span>:&emsp;<input type="text" name="billing_date"></p>
-			<p><span class="fit">見積金額</span>:&emsp;<input type="text" name="estimated_amount"></p>
-			<p><span class="fit">受注金額</span>:&emsp;<input type="text" name="order_amount"></p>
+			<p><span class="fit">受注日</span>:&emsp;<input type="text" name="order_date" pattern="\d{4}/\d{2}/\d{2}" title="受注日は「YYYY/MM/DD」の形式で入力してください。"></p>
+			<p><span class="fit">S番号</span>:&emsp;S-<input type="text" name="s_number" pattern="\d{4}" title="S番号は「S-」を除いた半角4文字で入力してください。"></p>
+			<p><span class="fit">件名*</span>:&emsp;<input type="text" name="subject" pattern=".{1,40}" required title="件名は全角40文字以内で入力してください。"></p>
+			<p><span class="fit">数量</span>:&emsp;<input type="text" name="quantity" pattern="\d{1,4}" title="数量は半角で4桁以内で入力してください。"></p>
+			<p><span class="fit">納入指定日</span>:&emsp;<input type="text" name="delivery_date" pattern="\d{4}/\d{2}/\d{2}" title="納入指定日は「YYYY/MM/DD」の形式で入力してください。"></p>
+			<p><span class="fit">納入日</span>:&emsp;<input type="text" name="due_date" pattern="\d{4}/\d{2}/\d{2}" title="納入日は「YYYY/MM/DD」の形式で入力してください。"></p>
+			<p><span class="fit">請求日</span>:&emsp;<input type="text" name="billing_date" pattern="\d{4}/\d{2}/\d{2}" title="請求日は「YYYY/MM/DD」の形式で入力してください。"></p>
+			<p><span class="fit">見積金額</span>:&emsp;<input type="text" name="estimated_amount" pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
+			<p><span class="fit">受注金額</span>:&emsp;<input type="text" name="order_amount" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
 			<p><span class="fit">ステータス</span>:&emsp;
 			<select name="status_number">
 			<option value="1">請求済み</option>
