@@ -19,8 +19,8 @@
             <p><span class="fit">納入指定日</span>:&emsp;<input th:field="*{delivery_date}" pattern="\d{4}/\d{2}/\d{2}" title="納入指定日は「YYYY/MM/DD」の形式で入力してください。"></p>
             <p><span class="fit">納入日</span>:&emsp;<input th:field="*{due_date}" pattern="\d{4}/\d{2}/\d{2}" title="納入日は「YYYY/MM/DD」の形式で入力してください。"></p>
             <p><span class="fit">請求日</span>:&emsp;<input th:field="*{billing_date}"  pattern="\d{4}/\d{2}/\d{2}" title="請求日は「YYYY/MM/DD」の形式で入力してください。"></p>
-            <p><span class="fit">見積金額</span>:&emsp;<input th:field="*{estimated_amount}"  pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
-            <p><span class="fit">受注金額</span>:&emsp;<input th:field="*{order_amount}" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
+            <p><span class="fit">見積金額</span>:&emsp;&yen;<input th:field="*{estimated_amount}"  pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
+            <p><span class="fit">受注金額</span>:&emsp;&yen;<input th:field="*{order_amount}" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
             <p><span class="fit">ステータス</span>:&emsp;
             <select name="status_number">
 			<option value="1">請求済み</option>

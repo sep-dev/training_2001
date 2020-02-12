@@ -221,6 +221,18 @@ public class SaleController {
     @PostMapping(value="/edit/{no}")
     public String edit(@PathVariable String no, Model model) {
         Client list=saleService.getOne(no);
+        if(!list.getOrder_date().equals("")){
+        	list.setOrder_date(list.getOrder_date().substring(0,4) + "/" + list.getOrder_date().substring(4,6) + "/" + list.getOrder_date().substring(6,8));
+        }
+        if(!list.getDelivery_date().equals("")){
+        	list.setDelivery_date(list.getDelivery_date().substring(0,4) + "/" + list.getDelivery_date().substring(4,6) + "/" + list.getDelivery_date().substring(6,8));
+        }
+        if(!list.getDue_date().equals("")){
+        	list.setDue_date(list.getDue_date().substring(0,4) + "/" + list.getDue_date().substring(4,6) + "/" + list.getDue_date().substring(6,8));
+        }
+        if(!list.getBilling_date().equals("")){
+        	list.setBilling_date(list.getBilling_date().substring(0,4) + "/" + list.getBilling_date().substring(4,6) + "/" + list.getBilling_date().substring(6,8));
+        }
         model.addAttribute("list", list);
     	return "edit";
     }
