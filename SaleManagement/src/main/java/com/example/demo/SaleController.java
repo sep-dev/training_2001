@@ -41,23 +41,6 @@ public class SaleController {
     		}
     	}
     	return "login";
-    	//Login user = saleService.getOne(mail_address);
-    	//Login user = saleService.count(mail_address);
-    	//boolean findmail =saleService.existsById(mail_address);
-    	//if(user.getPassword().equals(password)) {
-    	//if(findmail) {
-    	/*	if(user.getPassword().equals(password)) {
-           	return "main";
-    		}else {
-            	model.addAttribute("mail_address",  mail_address);
-            	model.addAttribute("password",  password);
-            	return "login";
-    		}
-    	}else {
-        	model.addAttribute("mail_address",  mail_address);
-        	model.addAttribute("password",  password);
-        	return "login";
-    	}*/
     }
 
     @PostMapping(value="/insert")

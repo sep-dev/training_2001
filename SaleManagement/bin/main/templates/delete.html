@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>削除</title>
+	<link href="/main.css" rel="stylesheet"></link>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<a>下記登録情報を削除します。<br>
+	よろしいですか？</a>
+	<br>
+	<br>
+	<form action="/delete" th:object="${list}"  method="post">
+		<input th:field="*{no}" type="hidden">
+	    <input th:field="*{client}" type="hidden">
+	    <input th:field="*{order_date}" type="hidden">
+	    <input th:field="*{s_number}" type="hidden">
+		<input th:field="*{subject}" type="hidden">
+	    <input th:field="*{quantity}" type="hidden">
+	    <input th:field="*{delivery_date}" type="hidden">
+	    <input th:field="*{due_date}" type="hidden">
+		<input th:field="*{billing_date}" type="hidden">
+	    <input th:field="*{estimated_amount}" type="hidden">
+	    <input th:field="*{order_amount}" type="hidden">
+	    <input th:field="*{status_number}" type="hidden">
+	    <input th:field="*{remarks}" type="hidden">
+		<span class="fit">顧客</span>:&emsp; <a th:text="*{client}"></a><br>
+		<span class="fit">受注日</span>:&emsp; <a th:text="*{order_date}"></a><br>
+		<span class="fit">S番号</span>:&emsp; <a th:text="*{s_number}"></a><br>
+		<span class="fit">件名</span>:&emsp; <a th:text="*{subject}"></a><br>
+		<input class="btn" type="submit" value="OK">
+		<input class="btn" onclick="history.back()" type="button" value="キャンセル">
+	</form>
+</body>
+</html>
