@@ -25,15 +25,36 @@
 		</form>
 
 		<!-- ページングボタン -->
-		<a href="#">&lt;&lt;</a>
-		<a href="#">&lt;</a>
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-		<a href="#">&gt;</a>
-		<a href="#">&gt;&gt;</a>
+        <form method="post" name="btnFirst" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        	<span th:if='${page.firstPage}'>&lt;&lt;</span>
+		    <input type="hidden" name="page" value="0">
+		    <a th:if='${not page.firstPage}' href="javascript:btnFirst.submit()">&lt;&lt;</a>
+		</form>
+        <form method="post" name="btnPrev" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        	<span th:if='${page.firstPage}'>&lt;</span>
+		    <input type="hidden" name="page" th:value="${page.number-2}">
+		    <a th:if='${not page.firstPage}' href="javascript:btnPrev.submit()">&lt;</a>
+		</form>
+        <form th:each='item : ${page.items}' method="post" th:name="'btn_' + ${item.number}" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+		    <span th:if='${item.current}' th:text='${item.number}'></span>
+		    <input type="hidden" name="page" th:value="${item.number-1}">
+        	<a th:if='${not item.current}' th:text='${item.number}' th:href='@{javascript:btn_{btn}.submit()(btn=${item.number})}'></a>
+		</form>
+        <form method="post" name="btnNext" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+            <span th:if='${not page.hasNextPage}'>&gt;</span>
+		    <input type="hidden" name="page" th:value="${page.number}">
+		    <a th:if='${page.hasNextPage}' href="javascript:btnNext.submit()">&gt;</a>
+		</form>
+        <form method="post" name="btnLast" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+            <span th:if='${not page.hasNextPage}'>&gt;&gt;</span>
+		    <input type="hidden" name="page" th:value="${page.totalPages - 1}">
+		    <a th:if='${not page.lastPage}' href="javascript:btnLast.submit()">&gt;&gt;</a>
+		</form>
 
 
 		<!-- テーブル -->
@@ -89,15 +110,37 @@
         </table>
 
 		<!-- ページングボタン -->
-		<a href="#">&lt;&lt;</a>
-		<a href="#">&lt;</a>
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-		<a href="#">&gt;</a>
-		<a href="#">&gt;&gt;</a>
+        <form method="post" name="BtnFirst" action="/page" style="display:inline">
+        	<span th:if='${page.firstPage}'>&lt;&lt;</span>
+		    <a th:if='${not page.firstPage}' href="javascript:BtnFirst.submit()">&lt;&lt;</a>
+		    <input type="hidden" name="page" value="0">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+		</form>
+        <form method="post" name="BtnPrev" action="/page" style="display:inline">
+        	<span th:if='${page.firstPage}'>&lt;</span>
+		    <a th:if='${not page.firstPage}' href="javascript:BtnPrev.submit()">&lt;</a>
+		    <input type="hidden" name="page" th:value="${page.number-2}">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+		</form>
+        <form th:each='item : ${page.items}' method="post" th:name="'Btn_' + ${item.number}" action="/page" style="display:inline">
+		    <span th:if='${item.current}' th:text='${item.number}'></span>
+        	<a th:if='${not item.current}' th:text='${item.number}' th:href='@{javascript:Btn_{btn}.submit()(btn=${item.number})}'></a>
+		    <input type="hidden" name="page" th:value="${item.number-1}">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+		</form>
+        <form method="post" name="BtnNext" action="/page" style="display:inline">
+            <span th:if='${not page.hasNextPage}'>&gt;</span>
+		    <a th:if='${page.hasNextPage}' href="javascript:BtnNext.submit()">&gt;</a>
+		    <input type="hidden" name="page" th:value="${page.number}">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+		</form>
+        <form method="post" name="BtnLast" action="/page" style="display:inline">
+            <span th:if='${not page.hasNextPage}'>&gt;&gt;</span>
+		    <a th:if='${not page.lastPage}' href="javascript:BtnLast.submit()">&gt;&gt;</a>
+		    <input type="hidden" name="page" th:value="${page.totalPages - 1}">
+		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+		</form>
+
 
 	   	<!-- 登録ボタン -->
 		<form action="/insert" method="post">

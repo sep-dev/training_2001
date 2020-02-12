@@ -1,10 +1,11 @@
 package com.example.demo;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,8 @@ public class SaleService {
 	 *
 	 * @return
 	 */
-	public List<Client> selectAll() {
-		return displayRepository.findAll();
+	public Page<Client> selectAll(Pageable pageable) {
+		return displayRepository.findAll(pageable);
 	}
 
 	/**
@@ -131,7 +132,7 @@ public class SaleService {
 	 * @param saleRequest
 	 * @return
 	 */
-	public List<Client> searchAll(SaleRequest saleRequest) {
-	    return displayRepository.findBySubjectContaining(saleRequest.getSearchSomething());
+	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
+	    return displayRepository.findBySubjectContaining(pageable, saleRequest.getSearchSomething());
 	}
 }

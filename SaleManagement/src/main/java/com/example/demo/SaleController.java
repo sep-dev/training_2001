@@ -1,9 +1,9 @@
 package com.example.demo;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -41,15 +41,18 @@ public class SaleController {
     public String logincheck(@RequestParam("mail_address") String mail_address,
     		@RequestParam("password") String password,
     		Model model,
-    		SaleRequest saleRequest) {
+    		SaleRequest saleRequest,
+    		@PageableDefault(size = 10) Pageable pageable) {
 
     	Optional<Login> user = saleService.findOne(mail_address);
     	//メールアドレスが存在した場合
     	if(user.isPresent()) {
     		//パスワードが正しい場合
     		if(user.get().getPassword().equals(password)) {
-    	    	List<Client> list = saleService.selectAll();
+    	    	Page<Client> list = saleService.selectAll(pageable);
+    	        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
     	        model.addAttribute("list", list);
+    	        model.addAttribute("page", page);
     			return "main";
     			//パスワードが異なる場合
     		}else {
@@ -133,11 +136,15 @@ public class SaleController {
      */
     @PostMapping(value = "/checkok")
     public String create(Model model,
-    		SaleRequest saleRequest) {
+    		SaleRequest saleRequest,
+    		@PageableDefault(size = 10) Pageable pageable) {
     	saleService.create(saleRequest);
 
-    	List<Client> list = saleService.selectAll();
+    	Page<Client> list = saleService.selectAll(pageable);
+        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
+        model.addAttribute("page", page);
+
 		return "main";
 
     }
@@ -191,7 +198,8 @@ public class SaleController {
     		@RequestParam("status_number") String status_number,
     		@RequestParam("remarks") String remarks,
     		Model model,
-    		SaleRequest saleRequest) {
+    		SaleRequest saleRequest,
+    		Pageable pageable) {
     	model.addAttribute("no",  no);
     	model.addAttribute("client",  client);
     	model.addAttribute("order_date",  order_date);
@@ -207,8 +215,10 @@ public class SaleController {
     	model.addAttribute("remarks",  remarks);
     	saleService.delete(saleRequest);
 
-    	List<Client> list = saleService.selectAll();
+    	Page<Client> list = saleService.selectAll(pageable);
+        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
+        model.addAttribute("page", page);
 
     	return "main";
     }
@@ -284,11 +294,15 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/editcheckok")
-    public String editok(Model model ,SaleRequest saleRequest) {
+    public String editok(Model model ,
+    		SaleRequest saleRequest,
+    		@PageableDefault(size = 10) Pageable pageable) {
     	saleService.edit(saleRequest);
 
-    	List<Client> list = saleService.selectAll();
+    	Page<Client> list = saleService.selectAll(pageable);
+        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
+        model.addAttribute("page", page);
 
     	return "main";
     }
@@ -302,16 +316,40 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/search")
-    public String search(Model model, @PageableDefault(size = 10) Pageable pageable ,SaleRequest saleRequest) {
+    public String search(Model model,
+    		@PageableDefault(size = 10) Pageable pageable,
+    		SaleRequest saleRequest) {
     	saleRequest.searchSomething = saleRequest.searchSomething.replace("　","");
     	saleRequest.searchSomething = saleRequest.searchSomething.trim();
     	if(saleRequest.searchSomething.isEmpty()){
-            List<Client> list=saleService.selectAll();
+        	Page<Client> list = saleService.selectAll(pageable);
+            SaleWrapper<Client> page = new SaleWrapper<Client>(list);
             model.addAttribute("list", list);
+            model.addAttribute("page", page);
         }else{
-	    	List<Client> list=saleService.searchAll(saleRequest);
-	        model.addAttribute("list", list);
+        	Page<Client> list = saleService.searchAll(pageable, saleRequest);
+            SaleWrapper<Client> page = new SaleWrapper<Client>(list);
+            model.addAttribute("list", list);
+            model.addAttribute("page", page);
         }
+        return "main";
+    }
+
+    /**
+     * ページング機能
+     *
+     * @param model
+     * @param pageable
+     * @param saleRequest
+     * @return
+     */
+    @PostMapping(value = "/page")
+    public String page(Model model, @PageableDefault(size = 10) Pageable pageable, SaleRequest saleRequest) {
+        Page<Client> list=saleService.searchAll(pageable, saleRequest);
+        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("searchSomething", saleRequest.searchSomething);
         return "main";
     }
 }
