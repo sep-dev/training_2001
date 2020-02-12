@@ -22,7 +22,7 @@
             <p><span class="fit">見積金額</span>:&emsp;&yen;<input th:field="*{estimated_amount}"  pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
             <p><span class="fit">受注金額</span>:&emsp;&yen;<input th:field="*{order_amount}" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
             <p><span class="fit">ステータス</span>:&emsp;
-            <select name="status_number">
+            <select th:field="*{status_number}">
 			<option value="1">請求済み</option>
 			<option value="2">納入済み</option>
 			<option value="3">見積済み</option>
@@ -35,4 +35,3 @@
 		</form>
 	</body>
 </html>
-
