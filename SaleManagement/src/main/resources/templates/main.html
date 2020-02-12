@@ -19,8 +19,8 @@
 		<!-- 検索ボタン -->
 
 
-		<form class="right" action="#">
-			件名:&emsp; <input form="text">
+		<form class="right" th:object="${saleRequest}" action="/search" method="post">
+			件名:&emsp; <input th:field="*{searchSomething}">
 			<p><input type="submit" value="検索"></p>
 		</form>
 

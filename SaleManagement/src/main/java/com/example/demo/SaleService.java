@@ -99,6 +99,11 @@ public class SaleService {
 		displayRepository.save(customer);
 	}
 
+	/**
+	 * 該当ユーザーデータの編集
+	 *
+	 * @param saleRequest
+	 */
 	public void edit(SaleRequest saleRequest) {
 
 		Client customer = new Client();
@@ -118,5 +123,15 @@ public class SaleService {
 		customer.setId("1");
 		customer.setDelete_flg("0");
         displayRepository.save(customer);
+	}
+
+	/**
+	 * 部分検索時のテーブル取得
+	 *
+	 * @param saleRequest
+	 * @return
+	 */
+	public List<Client> searchAll(SaleRequest saleRequest) {
+	    return displayRepository.findBySubjectContaining(saleRequest.getSearchSomething());
 	}
 }
