@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class SaleController {
     	        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
     	        model.addAttribute("list", list);
     	        model.addAttribute("page", page);
+    	        List<Client> status = saleService.statusAll();
+    	        model.addAttribute("status", status);
+    	        List<Client> statusNumber = saleService.statusNumberAll();
+    	        model.addAttribute("statusNumber", statusNumber);
+
     			return "main";
     			//パスワードが異なる場合
     		}else {
@@ -144,6 +150,10 @@ public class SaleController {
         SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
+        List<Client> status = saleService.statusAll();
+        model.addAttribute("status", status);
+        List<Client> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
 
 		return "main";
 
@@ -197,9 +207,9 @@ public class SaleController {
     		@RequestParam("order_amount") String order_amount,
     		@RequestParam("status_number") String status_number,
     		@RequestParam("remarks") String remarks,
+    		@PageableDefault(size = 10) Pageable pageable,
     		Model model,
-    		SaleRequest saleRequest,
-    		Pageable pageable) {
+    		SaleRequest saleRequest) {
     	model.addAttribute("no",  no);
     	model.addAttribute("client",  client);
     	model.addAttribute("order_date",  order_date);
@@ -219,6 +229,10 @@ public class SaleController {
         SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
+        List<Client> status = saleService.statusAll();
+        model.addAttribute("status", status);
+        List<Client> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
 
     	return "main";
     }
@@ -303,6 +317,10 @@ public class SaleController {
         SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
+        List<Client> status = saleService.statusAll();
+        model.addAttribute("status", status);
+        List<Client> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
 
     	return "main";
     }
@@ -321,17 +339,25 @@ public class SaleController {
     		SaleRequest saleRequest) {
     	saleRequest.searchSomething = saleRequest.searchSomething.replace("　","");
     	saleRequest.searchSomething = saleRequest.searchSomething.trim();
-    	if(saleRequest.searchSomething.isEmpty()){
+/*    	if(saleRequest.searchSomething.isEmpty()){
         	Page<Client> list = saleService.selectAll(pageable);
             SaleWrapper<Client> page = new SaleWrapper<Client>(list);
             model.addAttribute("list", list);
             model.addAttribute("page", page);
-        }else{
+	        List<Client> status = saleService.statusAll();
+	        model.addAttribute("status", status);
+	        List<Client> statusNumber = saleService.statusNumberAll();
+	        model.addAttribute("statusNumber", statusNumber);
+        }else{*/
         	Page<Client> list = saleService.searchAll(pageable, saleRequest);
             SaleWrapper<Client> page = new SaleWrapper<Client>(list);
             model.addAttribute("list", list);
             model.addAttribute("page", page);
-        }
+	        List<Client> status = saleService.statusAll();
+	        model.addAttribute("status", status);
+	        List<Client> statusNumber = saleService.statusNumberAll();
+	        model.addAttribute("statusNumber", statusNumber);
+//        }
         return "main";
     }
 
@@ -344,12 +370,18 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/page")
-    public String page(Model model, @PageableDefault(size = 10) Pageable pageable, SaleRequest saleRequest) {
+    public String page(Model model,
+    		@PageableDefault(size = 10) Pageable pageable,
+    		SaleRequest saleRequest) {
         Page<Client> list=saleService.searchAll(pageable, saleRequest);
         SaleWrapper<Client> page = new SaleWrapper<Client>(list);
         model.addAttribute("list", list);
         model.addAttribute("page", page);
+        List<Client> status = saleService.statusAll();
+        model.addAttribute("status", status);
         model.addAttribute("searchSomething", saleRequest.searchSomething);
+        List<Client> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
         return "main";
     }
 }

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DisplayRepository extends JpaRepository<Client, String>{
 	public Page<Client> findAll(Pageable pageable);
-	public Page<Client> findBySubjectContaining(Pageable pageable, String subject);
+	public Page<Client> findBySubjectContainingAndClient(Pageable pageable, String subject, String client);
 }

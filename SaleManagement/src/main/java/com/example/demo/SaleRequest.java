@@ -22,4 +22,6 @@ public class SaleRequest {
 	private String remarks;
 	private String id;
 	String searchSomething;
+	String searchClient;
+	String searchStatus;
 }

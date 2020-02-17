@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class SaleService {
 	private final SaleRepository saleRepository;
 	private final DisplayRepository displayRepository;
+	private final StatusRepository statusRepository;
+	private final SearchRepository searchRepository;
 
 	/**
 	 * ログイン情報取得
@@ -132,7 +135,27 @@ public class SaleService {
 	 * @param saleRequest
 	 * @return
 	 */
+/*	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
+	    return displayRepository.findBySubjectContainingAndClient(pageable, saleRequest.getSearchSomething(), saleRequest.getSearchClient());
+	}*/
+
+	public List<Client> statusAll() {
+	    return statusRepository.findAll();
+	}
+	public List<Client> statusNumberAll() {
+	    return statusRepository.findByStatus_number();
+	}
 	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
-	    return displayRepository.findBySubjectContaining(pageable, saleRequest.getSearchSomething());
+		if(saleRequest.getSearchClient()==""&&saleRequest.getSearchStatus()==""){
+			return searchRepository.findAll(pageable, saleRequest.getSearchSomething());
+		}else if(saleRequest.getSearchClient()=="") {
+			return searchRepository.findAll(pageable, Integer.parseInt(saleRequest.getSearchStatus()), saleRequest.getSearchSomething());
+		}else if(saleRequest.getSearchStatus()=="") {
+			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchSomething());
+		}else {
+			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
+		}
+
+//	    return searchRepository.findAll(saleRequest.getSearchClient(), saleRequest.getStatus_number(), saleRequest.getSearchSomething());
 	}
 }
