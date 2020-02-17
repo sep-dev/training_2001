@@ -339,16 +339,6 @@ public class SaleController {
     		SaleRequest saleRequest) {
     	saleRequest.searchSomething = saleRequest.searchSomething.replace("　","");
     	saleRequest.searchSomething = saleRequest.searchSomething.trim();
-/*    	if(saleRequest.searchSomething.isEmpty()){
-        	Page<Client> list = saleService.selectAll(pageable);
-            SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-            model.addAttribute("list", list);
-            model.addAttribute("page", page);
-	        List<Client> status = saleService.statusAll();
-	        model.addAttribute("status", status);
-	        List<Client> statusNumber = saleService.statusNumberAll();
-	        model.addAttribute("statusNumber", statusNumber);
-        }else{*/
         	Page<Client> list = saleService.searchAll(pageable, saleRequest);
             SaleWrapper<Client> page = new SaleWrapper<Client>(list);
             model.addAttribute("list", list);
@@ -357,7 +347,6 @@ public class SaleController {
 	        model.addAttribute("status", status);
 	        List<Client> statusNumber = saleService.statusNumberAll();
 	        model.addAttribute("statusNumber", statusNumber);
-//        }
         return "main";
     }
 

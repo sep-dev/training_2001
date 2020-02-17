@@ -9,17 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SearchRepository extends JpaRepository<Client, String>{
-/*	@Select("SELECT * "
-			+ "FROM client "
-			+ "WHERE client =  #{searchClient}  "
-			+ "AND status_number = #{searchStatus} "
-			+ "AND subject like % #{searchSomething} %")
-	public Page<Client> findAll2(
-			Pageable pageable,
-			@Param("searchClient") String searchClient,
-			@Param("searchStatus") String searchStatus,
-			@Param("searchSomething") String searchSomething);
-*/
 
 	@Query(value="SELECT * "
 			+ "FROM client "

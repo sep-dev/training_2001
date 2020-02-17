@@ -14,12 +14,4 @@ public interface StatusRepository{
 
 	@Select("SELECT distinct(status_number) FROM client")
 	public List<Client> findByStatus_number();
-
-
-/*	@Query(value="SELECT distinct(client) FROM client", nativeQuery = true)
-	public List<Client> findAll();
-
-	@Query(value="SELECT distinct(status_number) FROM client", nativeQuery = true)
-	public List<Client> findByStatus_number();
-*/
 }

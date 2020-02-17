@@ -135,10 +135,6 @@ public class SaleService {
 	 * @param saleRequest
 	 * @return
 	 */
-/*	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
-	    return displayRepository.findBySubjectContainingAndClient(pageable, saleRequest.getSearchSomething(), saleRequest.getSearchClient());
-	}*/
-
 	public List<Client> statusAll() {
 	    return statusRepository.findAll();
 	}
@@ -155,7 +151,5 @@ public class SaleService {
 		}else {
 			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
 		}
-
-//	    return searchRepository.findAll(saleRequest.getSearchClient(), saleRequest.getStatus_number(), saleRequest.getSearchSomething());
 	}
 }
