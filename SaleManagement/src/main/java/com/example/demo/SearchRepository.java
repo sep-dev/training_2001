@@ -25,6 +25,7 @@ public interface SearchRepository extends JpaRepository<Client, String>{
 			+ "FROM client "
 			+ "WHERE client =  :searchClient "
 			+ "AND status_number =  :searchStatus  "
+			+ "AND delete_flg = 0 "
 			+ "AND subject like %:searchSomething%"
 			, nativeQuery = true)
 	public Page<Client> findAll(
@@ -36,6 +37,7 @@ public interface SearchRepository extends JpaRepository<Client, String>{
 	@Query(value="SELECT * "
 			+ "FROM client "
 			+ "WHERE status_number =  :searchStatus "
+			+ "AND delete_flg = 0 "
 			+ "AND subject like %:searchSomething%"
 			, nativeQuery = true)
 	public Page<Client> findAll(
@@ -46,6 +48,7 @@ public interface SearchRepository extends JpaRepository<Client, String>{
 	@Query(value="SELECT * "
 			+ "FROM client "
 			+ "WHERE client =  :searchClient "
+			+ "AND delete_flg = 0 "
 			+ "AND subject like %:searchSomething%"
 			, nativeQuery = true)
 	public Page<Client> findAll(
@@ -55,7 +58,8 @@ public interface SearchRepository extends JpaRepository<Client, String>{
 
 	@Query(value="SELECT * "
 			+ "FROM client "
-			+ "WHERE  subject like %:searchSomething%"
+			+ "WHERE delete_flg = 0 "
+			+ "AND subject like %:searchSomething%"
 			, nativeQuery = true)
 	public Page<Client> findAll(
 			Pageable pageable,
