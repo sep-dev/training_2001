@@ -10,46 +10,46 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SearchRepository extends JpaRepository<Client, String>{
 
-	@Query(value="SELECT * "
-			+ "FROM client "
-			+ "WHERE client =  :searchClient "
-			+ "AND status_number =  :searchStatus  "
-			+ "AND delete_flg = 0 "
-			+ "AND subject like %:searchSomething%"
-			, nativeQuery = true)
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.client =  :searchClient "
+			+ "AND c.status_number =  :searchStatus  "
+			+ "AND c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
 	public Page<Client> findAll(
 			Pageable pageable,
 			@Param("searchClient") String searchClient,
 			@Param("searchStatus") String searchStatus,
 			@Param("searchSomething") String searchSomething);
 
-	@Query(value="SELECT * "
-			+ "FROM client "
-			+ "WHERE status_number =  :searchStatus "
-			+ "AND delete_flg = 0 "
-			+ "AND subject like %:searchSomething%"
-			, nativeQuery = true)
-	public Page<Client> findAll(
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.status_number =  :searchStatus "
+			+ "AND c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
+	public Page<Client> findIntAll(
 			Pageable pageable,
-			@Param("searchStatus") int searchStatus,
+			@Param("searchStatus") String searchStatus,
 			@Param("searchSomething") String searchSomething);
 
-	@Query(value="SELECT * "
-			+ "FROM client "
-			+ "WHERE client =  :searchClient "
-			+ "AND delete_flg = 0 "
-			+ "AND subject like %:searchSomething%"
-			, nativeQuery = true)
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.client =  :searchClient "
+			+ "AND c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
 	public Page<Client> findAll(
 			Pageable pageable,
 			@Param("searchClient") String searchClient,
 			@Param("searchSomething") String searchSomething);
 
-	@Query(value="SELECT * "
-			+ "FROM client "
-			+ "WHERE delete_flg = 0 "
-			+ "AND subject like %:searchSomething%"
-			, nativeQuery = true)
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
 	public Page<Client> findAll(
 			Pageable pageable,
 			@Param("searchSomething") String searchSomething);

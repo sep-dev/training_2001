@@ -20,7 +20,13 @@
 			<input th:field="*{billing_date}" type="hidden"><span class="fit">請求日</span>:&emsp; <a th:text="${billing_date}"></a><br>
 			<input th:field="*{estimated_amount}" type="hidden"><span class="fit">見積金額</span>:&emsp; <a th:if='${saleRequest.estimated_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(saleRequest.estimated_amount, 3, 'COMMA')}"></a><a th:if='${saleRequest.estimated_amount==""}' th:text="${estimated_amount}"></a><br>
 			<input th:field="*{order_amount}" type="hidden"><span class="fit">受注金額</span>:&emsp; <a th:if='${saleRequest.order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(saleRequest.order_amount, 3, 'COMMA')}"></a><a th:if='${saleRequest.order_amount==""}' th:text="${order_amount}"></a><br>
-			<input th:field="*{status_number}" type="hidden"><span class="fit">ステータス</span>:&emsp; <a th:text="${status_number}"></a><br>
+			<input th:field="*{status_number}" type="hidden"><span class="fit">ステータス</span>:&emsp;
+			<a th:if='${status_number=="1"}' th:text="請求済み"></a>
+			<a th:if='${status_number=="2"}' th:text="納入済み"></a>
+			<a th:if='${status_number=="3"}' th:text="見積済み"></a>
+			<a th:if='${status_number=="4"}' th:text="製造着手"></a>
+			<a th:if='${status_number=="5"}' th:text="製造完了"></a>
+			<a th:if='${status_number=="6"}' th:text="受注"></a><br>
 			<input th:field="*{remarks}" type="hidden"><span class="fit">備考</span>:&emsp; <a th:text="${remarks}"></a><br>
 			<input type="submit" value="登録" class="btn">
 			<input onclick="history.back()" type="button" value="戻る" class="btn">

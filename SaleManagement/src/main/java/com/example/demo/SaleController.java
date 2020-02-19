@@ -30,7 +30,32 @@ public class SaleController {
     }
 
     /**
-     * パスワードの照合・メインページへ遷移
+     * メイン画面表示
+     *
+     * @param model
+     * @param saleRequest
+     * @param pageable
+     * @return
+     */
+    @GetMapping(value="/main")
+    public String main(Model model ,
+    		SaleRequest saleRequest,
+    		@PageableDefault(size = 10) Pageable pageable) {
+
+    	Page<Client> list = saleService.selectAll(pageable);
+        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        List<Client> status = saleService.statusAll();
+        model.addAttribute("status", status);
+        List<Status> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
+
+		return "main";
+    }
+
+    /**
+     * パスワードの照合
      *
      * @param mail_address
      * @param password
@@ -50,16 +75,7 @@ public class SaleController {
     	if(user.isPresent()) {
     		//パスワードが正しい場合
     		if(user.get().getPassword().equals(password)) {
-    	    	Page<Client> list = saleService.selectAll(pageable);
-    	        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-    	        model.addAttribute("list", list);
-    	        model.addAttribute("page", page);
-    	        List<Client> status = saleService.statusAll();
-    	        model.addAttribute("status", status);
-    	        List<Client> statusNumber = saleService.statusNumberAll();
-    	        model.addAttribute("statusNumber", statusNumber);
-
-    			return "main";
+    			return "redirect:/main";
     			//パスワードが異なる場合
     		}else {
             	model.addAttribute("mail_address",
@@ -134,7 +150,7 @@ public class SaleController {
     }
 
     /**
-     * 新規登録処理・メインページへ遷移
+     * 新規登録処理
      *
      * @param model
      * @param saleRequest
@@ -146,16 +162,7 @@ public class SaleController {
     		@PageableDefault(size = 10) Pageable pageable) {
     	saleService.create(saleRequest);
 
-    	Page<Client> list = saleService.selectAll(pageable);
-        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-        model.addAttribute("list", list);
-        model.addAttribute("page", page);
-        List<Client> status = saleService.statusAll();
-        model.addAttribute("status", status);
-        List<Client> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
-
-		return "main";
+		return "redirect:/main";
 
     }
 
@@ -225,16 +232,7 @@ public class SaleController {
     	model.addAttribute("remarks",  remarks);
     	saleService.delete(saleRequest);
 
-    	Page<Client> list = saleService.selectAll(pageable);
-        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-        model.addAttribute("list", list);
-        model.addAttribute("page", page);
-        List<Client> status = saleService.statusAll();
-        model.addAttribute("status", status);
-        List<Client> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
-
-    	return "main";
+    	return "redirect:/main";
     }
 
     /**
@@ -313,16 +311,7 @@ public class SaleController {
     		@PageableDefault(size = 10) Pageable pageable) {
     	saleService.edit(saleRequest);
 
-    	Page<Client> list = saleService.selectAll(pageable);
-        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-        model.addAttribute("list", list);
-        model.addAttribute("page", page);
-        List<Client> status = saleService.statusAll();
-        model.addAttribute("status", status);
-        List<Client> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
-
-    	return "main";
+    	return "redirect:/main";
     }
 
     /**
@@ -345,7 +334,7 @@ public class SaleController {
             model.addAttribute("page", page);
 	        List<Client> status = saleService.statusAll();
 	        model.addAttribute("status", status);
-	        List<Client> statusNumber = saleService.statusNumberAll();
+	        List<Status> statusNumber = saleService.statusNumberAll();
 	        model.addAttribute("statusNumber", statusNumber);
         return "main";
     }
@@ -369,7 +358,7 @@ public class SaleController {
         List<Client> status = saleService.statusAll();
         model.addAttribute("status", status);
         model.addAttribute("searchSomething", saleRequest.searchSomething);
-        List<Client> statusNumber = saleService.statusNumberAll();
+        List<Status> statusNumber = saleService.statusNumberAll();
         model.addAttribute("statusNumber", statusNumber);
         return "main";
     }

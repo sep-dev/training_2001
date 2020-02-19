@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface StatusRepository{
-	@Select("SELECT distinct(client) FROM client")
-	public List<Client> findAll();
+	@Select("SELECT distinct client FROM client")
+	public List<Client> findByClient();
 
-	@Select("SELECT distinct(status_number) FROM client")
-	public List<Client> findByStatus_number();
+	@Select("SELECT distinct status, status_numbers FROM status_master")
+	public List<Status> findAll();
 }

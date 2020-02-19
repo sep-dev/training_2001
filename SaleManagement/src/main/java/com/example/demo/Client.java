@@ -2,9 +2,12 @@ package com.example.demo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
@@ -124,5 +127,16 @@ public class Client {
     }
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_number", referencedColumnName = "status_numbers", insertable = false, updatable = false)
+    private Status status;
+    public String getStatus() {
+        return status.getStatus();
+    }
+    public void setStatus(String status) {
+        this.status.setStatus(status);
     }
 }

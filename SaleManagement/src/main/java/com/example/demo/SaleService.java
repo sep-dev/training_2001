@@ -136,16 +136,16 @@ public class SaleService {
 	 * @return
 	 */
 	public List<Client> statusAll() {
-	    return statusRepository.findAll();
+	    return statusRepository.findByClient();
 	}
-	public List<Client> statusNumberAll() {
-	    return statusRepository.findByStatus_number();
+	public List<Status> statusNumberAll() {
+	    return statusRepository.findAll();
 	}
 	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
 		if(saleRequest.getSearchClient()==""&&saleRequest.getSearchStatus()==""){
 			return searchRepository.findAll(pageable, saleRequest.getSearchSomething());
 		}else if(saleRequest.getSearchClient()=="") {
-			return searchRepository.findAll(pageable, Integer.parseInt(saleRequest.getSearchStatus()), saleRequest.getSearchSomething());
+			return searchRepository.findIntAll(pageable, saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
 		}else if(saleRequest.getSearchStatus()=="") {
 			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchSomething());
 		}else {

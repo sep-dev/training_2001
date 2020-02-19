@@ -25,7 +25,7 @@
 
 			<p>ステータス:<select name="searchStatus">
 				<option value="">---------</option>
-				<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status_number}" th:value="${sta.status_number}" th:selected="${sta.status_number} == ${saleRequest.searchStatus}"></option>
+				<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status}" th:value="${sta.status_numbers}" th:selected="${sta.status_numbers} == ${saleRequest.searchStatus}"></option>
 			</select></p>
 
 			件名:&emsp; <input th:field="*{searchSomething}">
@@ -120,7 +120,7 @@
 		                <th:block th:if='${cus.order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(cus.order_amount, 3, 'COMMA')}"/>
 		                <th:block th:if='${cus.order_amount==""}' th:text="'-'"/>
 	                </td>
-	                <td th:text="*{status_number}"/>
+	                <td th:text="*{status}"/>
 	                <td><form th:action="@{/edit/{no}(no=*{no})}" method="post"><input type="submit" value="編集"></form></td>
 	                <td><form th:action="@{/delete/{no}(no=*{no})}" method="post"><input type="submit" value="削除"></form></td>
 	            </tr>
