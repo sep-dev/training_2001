@@ -25,6 +25,7 @@
 			<input th:field="*{order_amount}" type="hidden"><span class="fit">受注金額</span>:&emsp; <a th:if='${order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(order_amount, 3, 'COMMA')}"></a>
 			<a th:if='${order_amount==""}' th:text="${order_amount}"></a><br>
 			<input th:field="*{status_number}" type="hidden"><span class="fit">ステータス</span>:&emsp;
+			<a th:each="sta : ${statusNumber}" th:object="${sta}" th:if="${sta.status_numbers} == ${saleRequest.status_number}" th:text="*{status}"></a><br>
 			<a th:if='${status_number=="1"}'>請求済み</a>
 			<a th:if='${status_number=="2"}'>納入済み</a>
 			<a th:if='${status_number=="3"}'>見積済み</a>

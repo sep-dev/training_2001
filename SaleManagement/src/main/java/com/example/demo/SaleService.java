@@ -20,6 +20,7 @@ public class SaleService {
 	private final DisplayRepository displayRepository;
 	private final StatusRepository statusRepository;
 	private final SearchRepository searchRepository;
+	private final StatusNumberRepository statusNumberRepository;
 
 	/**
 	 * ログイン情報取得
@@ -126,6 +127,7 @@ public class SaleService {
 		customer.setRemarks(saleRequest.getRemarks());
 		customer.setId("1");
 		customer.setDelete_flg("0");
+
         displayRepository.save(customer);
 	}
 
@@ -151,5 +153,18 @@ public class SaleService {
 		}else {
 			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
 		}
+	}
+
+	public void status(SaleRequest saleRequest) {
+
+		Status status = new Status();
+		if(saleRequest.getStatus_numbers()=="") {
+			status.setStatus(saleRequest.getStatus());
+		}else {
+			status.setStatus(saleRequest.getStatus());
+			status.setStatus_numbers(saleRequest.getStatus_numbers());
+		}
+
+		statusNumberRepository.save(status);
 	}
 }

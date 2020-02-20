@@ -97,6 +97,10 @@ public class SaleController {
     @PostMapping(value="/insert")
     public String insert(Model model) {
         model.addAttribute("saleRequest", new SaleRequest());
+
+        List<Status> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
+
     	return "add";
     }
 
@@ -146,6 +150,10 @@ public class SaleController {
     	model.addAttribute("order_amount",  order_amount);
     	model.addAttribute("status_number",  status_number);
     	model.addAttribute("remarks",  remarks);
+
+        List<Status> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
+
     	return "addcheck";
     }
 
@@ -258,6 +266,10 @@ public class SaleController {
         	list.setBilling_date(list.getBilling_date().substring(0,4) + "/" + list.getBilling_date().substring(4,6) + "/" + list.getBilling_date().substring(6,8));
         }
         model.addAttribute("list", list);
+
+        List<Status> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
+
     	return "edit";
     }
 
@@ -295,6 +307,10 @@ public class SaleController {
     	model.addAttribute("order_amount",  order_amount);
     	model.addAttribute("status_number",  status_number);
     	model.addAttribute("remarks",  remarks);
+
+        List<Status> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
+
     	return "editcheck";
 	}
 
@@ -361,5 +377,25 @@ public class SaleController {
         List<Status> statusNumber = saleService.statusNumberAll();
         model.addAttribute("statusNumber", statusNumber);
         return "main";
+    }
+
+    @PostMapping(value = "/status")
+    public String status(Model model,
+    		SaleRequest saleRequest) {
+    	List<Status> statusNumber = saleService.statusNumberAll();
+        model.addAttribute("statusNumber", statusNumber);
+        return "status";
+    }
+
+    @PostMapping(value="/statuscheck")
+    public String check(@RequestParam("status") String status,
+    		@RequestParam("status_numbers") String status_numbers,
+    		Model model ,
+    		SaleRequest saleRequest) {
+    	model.addAttribute("status",  status);
+    	model.addAttribute("status_numbers",  status_numbers);
+    	saleService.status(saleRequest);
+
+    	return "redirect:/main";
     }
 }

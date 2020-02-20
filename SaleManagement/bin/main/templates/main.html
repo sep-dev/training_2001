@@ -7,29 +7,37 @@
     </head>
     <body>
 
-	   <h1>製造部売上管理システム：案件一覧</h1>
+		<h1>製造部売上管理システム：案件一覧</h1>
 
-	   	<!-- 登録ボタン -->
+		<!-- 登録ボタン -->
 		<form class="left" action="/insert" method="post">
 			<p><input type="submit" value="新規登録"></p>
 		</form>
 
-		<h1 class="center">検索</h1>
+		<!-- ステータス更新ボタン -->
+		<form class="status" action="/status" method="post">
+			<p><input type="submit" value="ステータス更新"></p>
+		</form>
 
 		<!-- 検索ボタン -->
-		<form class="right" th:object="${saleRequest}" action="/search" method="post">
-			<p>顧客:<select name="searchClient">
-				<option value="">---------</option>
-				<option th:each="cli : ${status}" th:object="${cli}" th:text="*{client}" th:value="${cli.client}" th:selected="${cli.client} == ${saleRequest.searchClient}"></option>
-			</select></p>
+		<h1 class="search">検索</h1>
+		<form th:object="${saleRequest}" action="/search" method="post">
+			<div  class="center">
+				<a>顧客:<select name="searchClient">
+					<option value="">---------</option>
+					<option th:each="cli : ${status}" th:object="${cli}" th:text="*{client}" th:value="${cli.client}" th:selected="${cli.client} == ${saleRequest.searchClient}"></option>
+				</select></a><br>
 
-			<p>ステータス:<select name="searchStatus">
-				<option value="">---------</option>
-				<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status}" th:value="${sta.status_numbers}" th:selected="${sta.status_numbers} == ${saleRequest.searchStatus}"></option>
-			</select></p>
+				<a>ステータス:<select name="searchStatus">
+					<option value="">---------</option>
+					<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status}" th:value="${sta.status_numbers}" th:selected="${sta.status_numbers} == ${saleRequest.searchStatus}"></option>
+				</select></a>
+			</div>
 
-			件名:&emsp; <input th:field="*{searchSomething}">
-			<p><input type="submit" value="検索"></p>
+			<div  class="right">
+				<p>件名:&emsp; <input th:field="*{searchSomething}"><br>
+				<input type="submit" value="検索"></p>
+			</div>
 		</form>
 
 		<!-- ページングボタン -->

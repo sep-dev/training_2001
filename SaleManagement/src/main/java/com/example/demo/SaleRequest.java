@@ -21,6 +21,9 @@ public class SaleRequest {
 	private String status_number;
 	private String remarks;
 	private String id;
+	private String status;
+	private String status_numbers;
+
 	String searchSomething;
 	String searchClient;
 	String searchStatus;

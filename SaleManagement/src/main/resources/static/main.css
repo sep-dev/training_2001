@@ -14,19 +14,33 @@ table th {
 	background-color: #87cefa;
 }
 
-h1{
+h1 {
 	font-size: 100%;
 }
 
 .left {
-   text-align: left;
-   float: left;
+	float: left;
 }
 
-.center{
+.search {
+	float: left;
+	display: block;
+	margin: 0 50px 0 270px;
+}
+
+.status{
+	float: left;
+}
+
+.center {
 	float: left;
 }
 
 .right {
 	text-align: right;
+}
+
+.fit{
+	display: inline-block;
+	width: 8em;
 }

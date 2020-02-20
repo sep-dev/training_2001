@@ -22,13 +22,8 @@
             <p><span class="fit">見積金額</span>:&emsp;&yen;<input th:field="*{estimated_amount}"  pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
             <p><span class="fit">受注金額</span>:&emsp;&yen;<input th:field="*{order_amount}" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
             <p><span class="fit">ステータス</span>:&emsp;
-            <select th:field="*{status_number}">
-			<option value="1">請求済み</option>
-			<option value="2">納入済み</option>
-			<option value="3">見積済み</option>
-			<option value="4">製造着手</option>
-			<option value="5">製造完了</option>
-			<option value="6">受注</option>
+            <select name="status_number">
+			<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status}" th:value="*{status_numbers}" th:selected="${sta.status_numbers} == ${list.status_number}"></option>
 			</select></p>
             <p><span class="fit">備考</span>:&emsp;<input th:field="*{remarks}"></p>
 	        <input type="submit" value="確認" class="btn"><input onclick="history.back()" type="button" value="戻る" class="btn">
