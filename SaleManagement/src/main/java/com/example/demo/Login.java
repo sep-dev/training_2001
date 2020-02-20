@@ -9,7 +9,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name="login")
 @Where(clause="delete_flg = 0")
@@ -20,23 +22,4 @@ public class Login {
     private String mail_address;
     private String password;
     private String delete_flg;
-
-    public String getMail_address() {
-        return mail_address;
-    }
-    public void setMail_address(String mail_address) {
-        this.mail_address = mail_address;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public String getDelete_flg() {
-        return delete_flg;
-    }
-    public void setDelete_flg(String delete_flg) {
-        this.delete_flg = delete_flg;
-    }
 }
