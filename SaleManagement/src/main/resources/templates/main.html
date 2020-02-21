@@ -105,30 +105,36 @@
 	            <tr th:each="cus : ${list}" th:object="${cus}">
 	                <td th:text="*{no}"/>
 	                <td th:text="*{client}"/>
-	                <td th:if='${cus.order_date!=""}' th:text="*{order_date.substring(0,4)} + '/' + *{order_date.substring(4,6)} + '/' + *{order_date.substring(6,8)}"></td>
-	                <td th:if='${cus.order_date==""}' th:text="'-'"></td>
-	                <td th:if='${cus.s_number!=""}' th:text="'S-' + *{s_number}"/>
-	                <td th:if='${cus.s_number==""}' th:text="'-'"/>
+	                <td th:if='*{order_date!=""}' th:text="*{order_date.substring(0,4)} + '/' + *{order_date.substring(4,6)} + '/' + *{order_date.substring(6,8)}"></td>
+	                <td th:if='*{order_date==""}' th:text="'-'"></td>
+	                <td th:if='*{s_number!=""}' th:text="'S-' + *{s_number}"/>
+	                <td th:if='*{s_number==""}' th:text="'-'"/>
 	                <td th:text="*{subject}"/>
-	                <td th:if='${cus.quantity!=""}' th:text="*{quantity}"/>
-	                <td th:if='${cus.quantity==""}' th:text="'-'"/>
+	                <td th:if='*{quantity!=""}' th:text="*{quantity}"/>
+	                <td th:if='*{quantity==""}' th:text="'-'"/>
 	                <td>
-		                <span th:if='${cus.delivery_date!=""}' th:text="*{delivery_date.substring(0,4)} + '/' + *{delivery_date.substring(4,6)} + '/' + *{delivery_date.substring(6,8)}"></span>
-		                <span th:if='${cus.delivery_date==""}' th:text="'-'"></span>
+		                <span th:if='*{delivery_date!=""}' th:text="*{delivery_date.substring(0,4)} + '/' + *{delivery_date.substring(4,6)} + '/' + *{delivery_date.substring(6,8)}"></span>
+		                <span th:if='*{delivery_date==""}' th:text="'-'"></span>
 		                <br>
-		                <th:block th:if='${cus.due_date!=""}' th:text="*{due_date.substring(0,4)} + '/' + *{due_date.substring(4,6)} + '/' + *{due_date.substring(6,8)}"/>
-		                <th:block th:if='${cus.due_date==""}' th:text="'-'">
+		                <th:block th:if='*{due_date!=""}' th:text="*{due_date.substring(0,4)} + '/' + *{due_date.substring(4,6)} + '/' + *{due_date.substring(6,8)}"/>
+		                <th:block th:if='*{due_date==""}' th:text="'-'">
 	                </td>
-	                <td th:if='${cus.billing_date!=""}' th:text="*{billing_date.substring(0,4)} + '/' + *{billing_date.substring(4,6)} + '/' + *{billing_date.substring(6,8)}"/>
-	                <td th:if='${cus.billing_date==""}' th:text="'-'"/>
+	                <td th:if='*{billing_date!=""}' th:text="*{billing_date.substring(0,4)} + '/' + *{billing_date.substring(4,6)} + '/' + *{billing_date.substring(6,8)}"/>
+	                <td th:if='*{billing_date==""}' th:text="'-'"/>
 	                <td>
-		                <span th:if='${cus.estimated_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(cus.estimated_amount, 3, 'COMMA')}"></span>
-		                <span th:if='${cus.estimated_amount==""}' th:text="'-'"></span>
+		                <span th:if='*{estimated_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(cus.estimated_amount, 3, 'COMMA')}"></span>
+		                <span th:if='*{estimated_amount==""}' th:text="'-'"></span>
 		                <br>
-		                <th:block th:if='${cus.order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(cus.order_amount, 3, 'COMMA')}"/>
-		                <th:block th:if='${cus.order_amount==""}' th:text="'-'"/>
+		                <th:block th:if='*{order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(cus.order_amount, 3, 'COMMA')}"/>
+		                <th:block th:if='*{order_amount==""}' th:text="'-'"/>
 	                </td>
-	                <td th:text="*{status}"/>
+<!--	                <td th:text="*{status}"/>
+ -->
+
+	                <td th:if='*{delete_flgs=="0"}' th:text="*{status}"/>
+	                <td th:if='*{delete_flgs=="1"}'></td>
+
+
 	                <td><form th:action="@{/edit/{no}(no=*{no})}" method="post"><input type="submit" value="編集"></form></td>
 	                <td><form th:action="@{/delete/{no}(no=*{no})}" method="post"><input type="submit" value="削除"></form></td>
 	            </tr>

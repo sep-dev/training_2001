@@ -2,7 +2,6 @@ package com.example.demo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +38,7 @@ public class Client {
     private String delete_flg;
     private String remarks;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "status_number", referencedColumnName = "status_numbers", insertable = false, updatable = false)
     private Status status;
     public String getStatus() {
@@ -47,5 +46,15 @@ public class Client {
     }
     public void setStatus(String status) {
         this.status.setStatus(status);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "status_number", referencedColumnName = "status_numbers", insertable = false, updatable = false)
+    private Status delete_flgs;
+    public String getDelete_flgs() {
+        return delete_flgs.getDelete_flgs();
+    }
+    public void setDelete_flgs(String delete_flgs) {
+        this.delete_flgs.setDelete_flgs(delete_flgs);
     }
 }

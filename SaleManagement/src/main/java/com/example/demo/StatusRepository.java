@@ -12,6 +12,6 @@ public interface StatusRepository{
 	@Select("SELECT distinct client FROM client")
 	public List<Client> findByClient();
 
-	@Select("SELECT distinct status, status_numbers FROM status_master")
+	@Select("SELECT distinct status, status_numbers FROM status_master WHERE delete_flgs = 0")
 	public List<Status> findAll();
 }

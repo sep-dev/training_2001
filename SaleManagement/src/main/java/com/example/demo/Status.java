@@ -23,6 +23,7 @@ public class Status implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String status_numbers;
     private String status;
+    private String delete_flgs;
 
     @OneToMany(mappedBy = "status_number")
     private List<Client> clientList;

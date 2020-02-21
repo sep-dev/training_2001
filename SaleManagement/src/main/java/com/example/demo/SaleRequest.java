@@ -23,6 +23,7 @@ public class SaleRequest {
 	private String id;
 	private String status;
 	private String status_numbers;
+	private String delete_flgs;
 
 	String searchSomething;
 	String searchClient;

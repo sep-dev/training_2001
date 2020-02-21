@@ -251,7 +251,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/edit/{no}")
-    public String edit(@PathVariable String no, Model model) {
+    public String edit(@PathVariable String no
+    		, Model model) {
         Client list=saleService.getOne(no);
         if(!list.getOrder_date().equals("")){
         	list.setOrder_date(list.getOrder_date().substring(0,4) + "/" + list.getOrder_date().substring(4,6) + "/" + list.getOrder_date().substring(6,8));
@@ -395,6 +396,29 @@ public class SaleController {
     	model.addAttribute("status",  status);
     	model.addAttribute("status_numbers",  status_numbers);
     	saleService.status(saleRequest);
+
+    	return "redirect:/main";
+    }
+
+    @PostMapping(value="/statusdelete")
+    public String statusdelete(
+    		@RequestParam("status_numbers") String status_numbers,
+    		Model model) {
+    	Status list=saleService.getOneStatus(status_numbers);
+    	model.addAttribute("list", list);
+
+    	return "statusdelete";
+    }
+
+    @PostMapping(value="/statusdeleteOK")
+    public String statusdeleteok(
+    		@RequestParam("status_numbers") String status_numbers,
+    		@RequestParam("status") String status,
+    		Model model,
+    		SaleRequest saleRequest) {
+    	model.addAttribute("status_numbers",  status_numbers);
+    	model.addAttribute("status",  status);
+    	saleService.statusdelete(saleRequest);
 
     	return "redirect:/main";
     }

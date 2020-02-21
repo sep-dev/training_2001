@@ -77,6 +77,11 @@ public class SaleService {
 		return displayRepository.getOne(no);
 	}
 
+
+	public Status getOneStatus(String status_numbers) {
+		return statusNumberRepository.getOne(status_numbers);
+	}
+
 	/**
 	 * 該当ユーザーデータの削除
 	 *
@@ -160,11 +165,24 @@ public class SaleService {
 		Status status = new Status();
 		if(saleRequest.getStatus_numbers()=="") {
 			status.setStatus(saleRequest.getStatus());
+			status.setDelete_flgs("0");
 		}else {
 			status.setStatus(saleRequest.getStatus());
 			status.setStatus_numbers(saleRequest.getStatus_numbers());
+			status.setDelete_flgs("0");
 		}
 
 		statusNumberRepository.save(status);
 	}
+
+	public void statusdelete(SaleRequest saleRequest) {
+
+		Status status = new Status();
+		status.setStatus(saleRequest.getStatus());
+		status.setStatus_numbers(saleRequest.getStatus_numbers());
+		status.setDelete_flgs("1");
+
+		statusNumberRepository.save(status);
+	}
+
 }

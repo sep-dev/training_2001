@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>ステータス削除</title>
+	<link href="/main.css" rel="stylesheet"></link>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<a>下記ステータスを削除します。よろしいですか？</a>
+	<br>
+	<br>
+	<form action="/statusdeleteOK" th:object="${list}"  method="post">
+	    <input th:field="*{status_numbers}" type="hidden">
+	    <input th:field="*{status}" type="hidden">
+		<span class="fit">ステータス名:</span>:&emsp; <a th:text="*{status}"></a><br>
+		<input class="btn" type="submit" value="OK">
+		<input class="btn" onclick="history.back()" type="button" value="キャンセル">
+	</form>
+</body>
+</html>

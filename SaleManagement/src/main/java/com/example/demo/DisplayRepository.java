@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DisplayRepository extends JpaRepository<Client, String>{
-	@Query(value="SELECT c "
-			+ "FROM Client c "
-			+ "LEFT OUTER JOIN Status s "
-			+ "ON c.status_number = s.status_numbers"
+	@Query(value="SELECT * "
+			+ "FROM client "
+			+ "LEFT OUTER JOIN status_master "
+			+ "ON client.status_number = status_master.status_numbers"
+			,nativeQuery=true
 			)
 	public Page<Client> findAll(Pageable pageable);
 	public Page<Client> findBySubjectContainingAndClient(Pageable pageable, String subject, String client);
