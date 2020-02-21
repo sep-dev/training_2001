@@ -427,6 +427,9 @@ public class SaleController {
     		@RequestParam("status_numbers") String status_numbers,
     		Model model ,
     		SaleRequest saleRequest) {
+    	if(status=="") {
+    		return "redirect:/main";
+    	}
     	model.addAttribute("status",  status);
     	model.addAttribute("status_numbers",  status_numbers);
     	saleService.status(saleRequest);
