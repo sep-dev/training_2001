@@ -13,11 +13,12 @@
 			<p><span class="fit">ステータス*</span>:&emsp;
 			<select name="status_numbers">
 				<option value="">-------------</option>
-				<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="${sta.status}" th:value="*{status_numbers}"></option>
+				<option th:each="sta : ${statusAndStatusNumber}" th:object="${sta}" th:text="${sta.status}" th:value="*{status_numbers}"></option>
 			</select></p>
 			<p><span class="fit">ステータス名*</span>:&emsp;<input type="text" name="status" pattern=".{1,4}" title="ステータス名は全角4文字以内で入力してください。"></p>
 			<p><button class="btn" formaction="/statuscheck">登録</button>
-			<button class="btn" formaction="/statusdelete">削除</button><br>
+			<button class="btn" formaction="/statusdelete">削除</button>
+			<br>
 			<input onclick="history.back()" type="button" value="戻る" class="btn"></p>
 		</form>
 	</body>

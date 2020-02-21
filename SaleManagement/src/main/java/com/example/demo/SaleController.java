@@ -30,31 +30,6 @@ public class SaleController {
     }
 
     /**
-     * メイン画面表示
-     *
-     * @param model
-     * @param saleRequest
-     * @param pageable
-     * @return
-     */
-    @GetMapping(value="/main")
-    public String main(Model model ,
-    		SaleRequest saleRequest,
-    		@PageableDefault(size = 10) Pageable pageable) {
-
-    	Page<Client> list = saleService.selectAll(pageable);
-        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-        model.addAttribute("list", list);
-        model.addAttribute("page", page);
-        List<Client> status = saleService.statusAll();
-        model.addAttribute("status", status);
-        List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
-
-		return "main";
-    }
-
-    /**
      * パスワードの照合
      *
      * @param mail_address
@@ -64,7 +39,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/login")
-    public String logincheck(@RequestParam("mail_address") String mail_address,
+    public String logincheck(
+    		@RequestParam("mail_address") String mail_address,
     		@RequestParam("password") String password,
     		Model model,
     		SaleRequest saleRequest,
@@ -89,6 +65,34 @@ public class SaleController {
     }
 
     /**
+     * メイン画面表示
+     *
+     * @param model
+     * @param saleRequest
+     * @param pageable
+     * @return
+     */
+    @GetMapping(value="/main")
+    public String main(
+    		Model model,
+    		SaleRequest saleRequest,
+    		@PageableDefault(size = 10) Pageable pageable) {
+
+    	Page<Client> allClientList = saleService.findClientAll(pageable);
+    	SaleWrapper<Client> page = new SaleWrapper<Client>(allClientList);
+    	model.addAttribute("allClientList", allClientList);
+    	model.addAttribute("page", page);
+
+    	List<Client> clientList = saleService.findClientList();
+    	model.addAttribute("clientList", clientList);
+
+    	List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+    	model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
+
+    	return "main";
+    }
+
+    /**
      * 新規登録画面へ遷移
      *
      * @param model
@@ -98,8 +102,8 @@ public class SaleController {
     public String insert(Model model) {
         model.addAttribute("saleRequest", new SaleRequest());
 
-        List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
+        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
 
     	return "add";
     }
@@ -124,7 +128,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/check")
-    public String check(@RequestParam("client") String client,
+    public String insertCheck(
+    		@RequestParam("client") String client,
     		@RequestParam("order_date") String order_date,
     		@RequestParam("s_number") String s_number,
     		@RequestParam("subject") String subject,
@@ -151,8 +156,8 @@ public class SaleController {
     	model.addAttribute("status_number",  status_number);
     	model.addAttribute("remarks",  remarks);
 
-        List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
+        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
 
     	return "addcheck";
     }
@@ -165,10 +170,11 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/checkok")
-    public String create(Model model,
+    public String insertOK(
+    		Model model,
     		SaleRequest saleRequest,
     		@PageableDefault(size = 10) Pageable pageable) {
-    	saleService.create(saleRequest);
+    	saleService.insert(saleRequest);
 
 		return "redirect:/main";
 
@@ -182,8 +188,10 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/delete/{no}")
-    public String delete(@PathVariable String no, Model model) {
-        Client list = saleService.getOne(no);
+    public String delete(
+    		@PathVariable String no,
+    		Model model) {
+        Client list = saleService.getOneClient(no);
         model.addAttribute("list", list);
     	return "delete";
     }
@@ -209,7 +217,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/delete")
-    public String deleteok(@RequestParam("no") String no,
+    public String deleteOK(
+    		@RequestParam("no") String no,
     		@RequestParam("client") String client,
     		@RequestParam("order_date") String order_date,
     		@RequestParam("s_number") String s_number,
@@ -251,9 +260,10 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/edit/{no}")
-    public String edit(@PathVariable String no
-    		, Model model) {
-        Client list=saleService.getOne(no);
+    public String edit(
+    		@PathVariable String no,
+    		Model model) {
+        Client list=saleService.getOneClient(no);
         if(!list.getOrder_date().equals("")){
         	list.setOrder_date(list.getOrder_date().substring(0,4) + "/" + list.getOrder_date().substring(4,6) + "/" + list.getOrder_date().substring(6,8));
         }
@@ -268,8 +278,8 @@ public class SaleController {
         }
         model.addAttribute("list", list);
 
-        List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
+        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
 
     	return "edit";
     }
@@ -280,7 +290,8 @@ public class SaleController {
 	 * @param saleRequest
 	 */
     @PostMapping(value="/checkedit")
-    public String edit(@RequestParam("no") String no,
+    public String editCheck(
+    		@RequestParam("no") String no,
     		@RequestParam("client") String client,
     		@RequestParam("order_date") String order_date,
     		@RequestParam("s_number") String s_number,
@@ -309,8 +320,8 @@ public class SaleController {
     	model.addAttribute("status_number",  status_number);
     	model.addAttribute("remarks",  remarks);
 
-        List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
+        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
 
     	return "editcheck";
 	}
@@ -323,7 +334,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/editcheckok")
-    public String editok(Model model ,
+    public String editOK(
+    		Model model,
     		SaleRequest saleRequest,
     		@PageableDefault(size = 10) Pageable pageable) {
     	saleService.edit(saleRequest);
@@ -340,19 +352,21 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/search")
-    public String search(Model model,
+    public String search(
+    		Model model,
     		@PageableDefault(size = 10) Pageable pageable,
     		SaleRequest saleRequest) {
-    	saleRequest.searchSomething = saleRequest.searchSomething.replace("　","");
-    	saleRequest.searchSomething = saleRequest.searchSomething.trim();
-        	Page<Client> list = saleService.searchAll(pageable, saleRequest);
-            SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-            model.addAttribute("list", list);
+    	saleRequest.searchSubject = saleRequest.searchSubject.replace("　","");
+    	saleRequest.searchSubject = saleRequest.searchSubject.trim();
+        	Page<Client> allClientList = saleService.search(pageable, saleRequest);
+            SaleWrapper<Client> page = new SaleWrapper<Client>(allClientList);
+            model.addAttribute("allClientList", allClientList);
             model.addAttribute("page", page);
-	        List<Client> status = saleService.statusAll();
-	        model.addAttribute("status", status);
-	        List<Status> statusNumber = saleService.statusNumberAll();
-	        model.addAttribute("statusNumber", statusNumber);
+	        List<Client> clientList = saleService.findClientList();
+	        model.addAttribute("clientList", clientList);
+	        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+	        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
+
         return "main";
     }
 
@@ -365,18 +379,20 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/page")
-    public String page(Model model,
+    public String page(
+    		Model model,
     		@PageableDefault(size = 10) Pageable pageable,
     		SaleRequest saleRequest) {
-        Page<Client> list=saleService.searchAll(pageable, saleRequest);
-        SaleWrapper<Client> page = new SaleWrapper<Client>(list);
-        model.addAttribute("list", list);
+        Page<Client> allClientList=saleService.search(pageable, saleRequest);
+        SaleWrapper<Client> page = new SaleWrapper<Client>(allClientList);
+        model.addAttribute("allClientList", allClientList);
         model.addAttribute("page", page);
-        List<Client> status = saleService.statusAll();
-        model.addAttribute("status", status);
-        model.addAttribute("searchSomething", saleRequest.searchSomething);
-        List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
+        List<Client> clientList = saleService.findClientList();
+        model.addAttribute("clientList", clientList);
+        model.addAttribute("searchSubject", saleRequest.searchSubject);
+        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
+
         return "main";
     }
 
@@ -388,10 +404,11 @@ public class SaleController {
      * @return
      */
     @PostMapping(value = "/status")
-    public String status(Model model,
+    public String status(
+    		Model model,
     		SaleRequest saleRequest) {
-    	List<Status> statusNumber = saleService.statusNumberAll();
-        model.addAttribute("statusNumber", statusNumber);
+    	List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
+        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
         return "status";
     }
 
@@ -405,7 +422,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/statuscheck")
-    public String check(@RequestParam("status") String status,
+    public String statusOK(
+    		@RequestParam("status") String status,
     		@RequestParam("status_numbers") String status_numbers,
     		Model model ,
     		SaleRequest saleRequest) {
@@ -424,7 +442,7 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/statusdelete")
-    public String statusdelete(
+    public String statusDeleteCheck(
     		@RequestParam("status_numbers") String status_numbers,
     		Model model) {
     	Status list=saleService.getOneStatus(status_numbers);
@@ -443,7 +461,7 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/statusdeleteOK")
-    public String statusdeleteok(
+    public String statusDeleteOK(
     		@RequestParam("status_numbers") String status_numbers,
     		@RequestParam("status") String status,
     		Model model,

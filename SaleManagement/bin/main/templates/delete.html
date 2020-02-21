@@ -23,13 +23,16 @@
 	    <input th:field="*{order_amount}" type="hidden">
 	    <input th:field="*{status_number}" type="hidden">
 	    <input th:field="*{remarks}" type="hidden">
-		<span class="fit">顧客</span>:&emsp; <a th:text="*{client}"></a><br>
-		<span class="fit">受注日</span>:&emsp; <a th:if='${list.order_date!=""}' th:text="*{order_date.substring(0,4)} + '/' + *{order_date.substring(4,6)} + '/' + *{order_date.substring(6,8)}"></a>
-		<a th:if='${list.order_date==""}' th:text="*{order_date}"></a><br>
-		<span class="fit">S番号</span>:&emsp; <a th:if='${list.s_number!=""}' th:text="'S-' + *{s_number}"></a>
+		<span class="fit">顧客</span>:&emsp; <a th:text="*{client}"></a>
+		<br>
+		<span class="fit">受注日</span>:&emsp; <a th:if='*{order_date!=""}' th:text="*{order_date.substring(0,4)} + '/' + *{order_date.substring(4,6)} + '/' + *{order_date.substring(6,8)}"></a>
+		<a th:if='${list.order_date==""}' th:text="*{order_date}"></a>
+		<br>
+		<span class="fit">S番号</span>:&emsp; <a th:if='*{s_number!=""}' th:text="'S-' + *{s_number}"></a>
 		<a th:if='${list.s_number==""}' th:text="*{s_number}"></a>
 		<br>
-		<span class="fit">件名</span>:&emsp; <a th:text="*{subject}"></a><br>
+		<span class="fit">件名</span>:&emsp; <a th:text="*{subject}"></a>
+		<br>
 		<input class="btn" type="submit" value="OK">
 		<input class="btn" onclick="history.back()" type="button" value="キャンセル">
 	</form>

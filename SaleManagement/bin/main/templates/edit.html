@@ -11,22 +11,35 @@
 
 		<form action="/checkedit" th:object="${list}"  method="post">
 			<input th:field="*{no}" type="hidden">
-            <p><span class="fit">顧客</span>:&emsp;<input th:text="*{client}" type="hidden"><input th:field="*{client}" type="hidden"></p>
-            <p><span class="fit">受注日</span>:&emsp;<input th:field="*{order_date}" pattern="\d{4}/\d{2}/\d{2}" title="受注日は「YYYY/MM/DD」の形式で入力してください。"></p>
-            <p><span class="fit">S番号</span>:&emsp;S-<input th:field="*{s_number}" pattern="\d{4}" title="S番号は「S-」を除いた半角4文字で入力してください。"></p>
-            <p><span class="fit">件名*</span>:&emsp;<input th:field="*{subject}" pattern=".{1,40}" required title="件名は全角40文字以内で入力してください。"></p>
-            <p><span class="fit">数量</span>:&emsp;<input th:field="*{quantity}" pattern="\d{1,4}" title="数量は半角で4桁以内で入力してください。"></p>
-            <p><span class="fit">納入指定日</span>:&emsp;<input th:field="*{delivery_date}" pattern="\d{4}/\d{2}/\d{2}" title="納入指定日は「YYYY/MM/DD」の形式で入力してください。"></p>
-            <p><span class="fit">納入日</span>:&emsp;<input th:field="*{due_date}" pattern="\d{4}/\d{2}/\d{2}" title="納入日は「YYYY/MM/DD」の形式で入力してください。"></p>
-            <p><span class="fit">請求日</span>:&emsp;<input th:field="*{billing_date}"  pattern="\d{4}/\d{2}/\d{2}" title="請求日は「YYYY/MM/DD」の形式で入力してください。"></p>
-            <p><span class="fit">見積金額</span>:&emsp;&yen;<input th:field="*{estimated_amount}"  pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
-            <p><span class="fit">受注金額</span>:&emsp;&yen;<input th:field="*{order_amount}" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
+            <p><span class="fit">顧客</span>:&emsp;
+            <input th:text="*{client}" type="hidden">
+            <input th:field="*{client}" type="hidden"></p>
+            <p><span class="fit">受注日</span>:&emsp;
+            <input th:field="*{order_date}" pattern="\d{4}/\d{2}/\d{2}" title="受注日は「YYYY/MM/DD」の形式で入力してください。"></p>
+            <p><span class="fit">S番号</span>:&emsp;S-
+            <input th:field="*{s_number}" pattern="\d{4}" title="S番号は「S-」を除いた半角4文字で入力してください。"></p>
+            <p><span class="fit">件名*</span>:&emsp;
+            <input th:field="*{subject}" pattern=".{1,40}" required title="件名は全角40文字以内で入力してください。"></p>
+            <p><span class="fit">数量</span>:&emsp;
+            <input th:field="*{quantity}" pattern="\d{1,4}" title="数量は半角で4桁以内で入力してください。"></p>
+            <p><span class="fit">納入指定日</span>:&emsp;
+            <input th:field="*{delivery_date}" pattern="\d{4}/\d{2}/\d{2}" title="納入指定日は「YYYY/MM/DD」の形式で入力してください。"></p>
+            <p><span class="fit">納入日</span>:&emsp;
+            <input th:field="*{due_date}" pattern="\d{4}/\d{2}/\d{2}" title="納入日は「YYYY/MM/DD」の形式で入力してください。"></p>
+            <p><span class="fit">請求日</span>:&emsp;
+            <input th:field="*{billing_date}"  pattern="\d{4}/\d{2}/\d{2}" title="請求日は「YYYY/MM/DD」の形式で入力してください。"></p>
+            <p><span class="fit">見積金額</span>:&emsp;&yen;
+            <input th:field="*{estimated_amount}"  pattern="\d{1,10}" title="見積金額は半角で10桁以内で入力してください。"></p>
+            <p><span class="fit">受注金額</span>:&emsp;&yen;
+            <input th:field="*{order_amount}" pattern="\d{1,10}" title="受注金額は半角で10桁以内で入力してください。"></p>
             <p><span class="fit">ステータス</span>:&emsp;
             <select name="status_number">
-			<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status}" th:value="*{status_numbers}" th:selected="${sta.status_numbers} == ${list.status_number}"></option>
+				<option th:each="sta : ${statusAndStatusNumber}" th:object="${sta}" th:text="*{status}" th:value="*{status_numbers}" th:selected="${sta.status_numbers} == ${list.status_number}"></option>
 			</select></p>
-            <p><span class="fit">備考</span>:&emsp;<input th:field="*{remarks}"></p>
-	        <input type="submit" value="確認" class="btn"><input onclick="history.back()" type="button" value="戻る" class="btn">
+            <p><span class="fit">備考</span>:&emsp;
+            <input th:field="*{remarks}"></p>
+	        <input type="submit" value="確認" class="btn">
+	        <input onclick="history.back()" type="button" value="戻る" class="btn">
 		</form>
 	</body>
 </html>

@@ -11,28 +11,52 @@
 
 		<form action="/editcheckok" th:object="${saleRequest}"  method="post">
 			<input th:field="*{no}" type="hidden">
-			<input th:field="*{client}" type="hidden"><span class="fit">顧客</span>:&emsp; <a th:text="${client}"></a><br>
-			<input th:field="*{order_date}" type="hidden"><span class="fit">受注日</span>:&emsp; <a th:text="${order_date}"></a><br>
-			<input th:field="*{s_number}" type="hidden"><span class="fit">S番号</span>:&emsp; <a th:if='${s_number!=""}' th:text="'S-' + ${s_number}"></a>
-			<a th:if='${s_number==""}' th:text="${s_number}"></a><br>
-			<input th:field="*{subject}" type="hidden"><span class="fit">件名</span>:&emsp; <a th:text="${subject}"></a><br>
-			<input th:field="*{quantity}" type="hidden"><span class="fit">数量</span>:&emsp; <a th:text="${quantity}"></a><br>
-			<input th:field="*{delivery_date}" type="hidden"><span class="fit">納入指定日</span>:&emsp; <a th:text="${delivery_date}"></a><br>
-			<input th:field="*{due_date}" type="hidden"><span class="fit">納入日</span>:&emsp; <a th:text="${due_date}"></a><br>
-			<input th:field="*{billing_date}" type="hidden"><span class="fit">請求日</span>:&emsp; <a th:text="${billing_date}"></a><br>
-			<input th:field="*{estimated_amount}" type="hidden"><span class="fit">見積金額</span>:&emsp; <a th:if='${estimated_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(estimated_amount, 3, 'COMMA')}"></a>
-			<a th:if='${estimated_amount==""}' th:text="${estimated_amount}"></a><br>
-			<input th:field="*{order_amount}" type="hidden"><span class="fit">受注金額</span>:&emsp; <a th:if='${order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(order_amount, 3, 'COMMA')}"></a>
-			<a th:if='${order_amount==""}' th:text="${order_amount}"></a><br>
+			<input th:field="*{client}" type="hidden"><span class="fit">顧客</span>:&emsp;
+			<a th:text="${client}"></a>
+			<br>
+			<input th:field="*{order_date}" type="hidden"><span class="fit">受注日</span>:&emsp;
+			<a th:text="${order_date}"></a>
+			<br>
+			<input th:field="*{s_number}" type="hidden"><span class="fit">S番号</span>:&emsp;
+			<a th:if='${s_number!=""}' th:text="'S-' + ${s_number}"></a>
+			<a th:if='${s_number==""}' th:text="${s_number}"></a>
+			<br>
+			<input th:field="*{subject}" type="hidden"><span class="fit">件名</span>:&emsp;
+			<a th:text="${subject}"></a>
+			<br>
+			<input th:field="*{quantity}" type="hidden"><span class="fit">数量</span>:&emsp;
+			<a th:text="${quantity}"></a>
+			<br>
+			<input th:field="*{delivery_date}" type="hidden"><span class="fit">納入指定日</span>:&emsp;
+			<a th:text="${delivery_date}"></a>
+			<br>
+			<input th:field="*{due_date}" type="hidden"><span class="fit">納入日</span>:&emsp;
+			<a th:text="${due_date}"></a>
+			<br>
+			<input th:field="*{billing_date}" type="hidden"><span class="fit">請求日</span>:&emsp;
+			<a th:text="${billing_date}"></a>
+			<br>
+			<input th:field="*{estimated_amount}" type="hidden"><span class="fit">見積金額</span>:&emsp;
+			<a th:if='${estimated_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(estimated_amount, 3, 'COMMA')}"></a>
+			<a th:if='${estimated_amount==""}' th:text="${estimated_amount}"></a>
+			<br>
+			<input th:field="*{order_amount}" type="hidden"><span class="fit">受注金額</span>:&emsp;
+			<a th:if='${order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(order_amount, 3, 'COMMA')}"></a>
+			<a th:if='${order_amount==""}' th:text="${order_amount}"></a>
+			<br>
 			<input th:field="*{status_number}" type="hidden"><span class="fit">ステータス</span>:&emsp;
-			<a th:each="sta : ${statusNumber}" th:object="${sta}" th:if="${sta.status_numbers} == ${saleRequest.status_number}" th:text="*{status}"></a><br>
+			<a th:each="sta : ${statusAndStatusNumber}" th:object="${sta}" th:if="${sta.status_numbers} == ${saleRequest.status_number}" th:text="*{status}"></a>
+			<br>
 			<a th:if='${status_number=="1"}'>請求済み</a>
 			<a th:if='${status_number=="2"}'>納入済み</a>
 			<a th:if='${status_number=="3"}'>見積済み</a>
 			<a th:if='${status_number=="4"}'>製造着手</a>
 			<a th:if='${status_number=="5"}'>製造完了</a>
-			<a th:if='${status_number=="6"}'>受注</a><br>
-			<input th:field="*{remarks}" type="hidden"><span class="fit">備考</span>:&emsp; <a th:text="${remarks}"></a><br>
+			<a th:if='${status_number=="6"}'>受注</a>
+			<br>
+			<input th:field="*{remarks}" type="hidden"><span class="fit">備考</span>:&emsp;
+			<a th:text="${remarks}"></a>
+			<br>
 			<input type="submit" value="登録" class="btn">
 			<input onclick="history.back()" type="button" value="戻る" class="btn">
 		</form>

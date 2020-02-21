@@ -12,7 +12,9 @@
 	<form action="/statusdeleteOK" th:object="${list}"  method="post">
 	    <input th:field="*{status_numbers}" type="hidden">
 	    <input th:field="*{status}" type="hidden">
-		<span class="fit">ステータス名:</span>:&emsp; <a th:text="*{status}"></a><br>
+		<span class="fit">ステータス名:</span>:&emsp;
+		<a th:text="*{status}"></a>
+		<br>
 		<input class="btn" type="submit" value="OK">
 		<input class="btn" onclick="history.back()" type="button" value="キャンセル">
 	</form>

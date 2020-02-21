@@ -25,7 +25,7 @@ public class SaleRequest {
 	private String status_numbers;
 	private String delete_flgs;
 
-	String searchSomething;
+	String searchSubject;
 	String searchClient;
 	String searchStatus;
 }

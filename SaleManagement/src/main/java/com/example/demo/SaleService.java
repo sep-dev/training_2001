@@ -37,7 +37,7 @@ public class SaleService {
 	 *
 	 * @return
 	 */
-	public Page<Client> selectAll(Pageable pageable) {
+	public Page<Client> findClientAll(Pageable pageable) {
 		return displayRepository.findAll(pageable);
 	}
 
@@ -46,7 +46,7 @@ public class SaleService {
 	 *
 	 * @param saleRequest
 	 */
-	public void create(SaleRequest saleRequest) {
+	public void insert(SaleRequest saleRequest) {
 
 		Client customer = new Client();
 		customer.setClient(saleRequest.getClient());
@@ -73,7 +73,7 @@ public class SaleService {
 	 * @param no
 	 * @return
 	 */
-	public Client getOne(String no) {
+	public Client getOneClient(String no) {
 		return displayRepository.getOne(no);
 	}
 
@@ -142,29 +142,29 @@ public class SaleService {
 	 * @param saleRequest
 	 * @return
 	 */
-	public List<Client> statusAll() {
+	public List<Client> findClientList() {
 	    return statusRepository.findByClient();
 	}
-	public List<Status> statusNumberAll() {
+	public List<Status> findStatusAndStatusNumber() {
 	    return statusRepository.findAll();
 	}
-	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
+	public Page<Client> search(Pageable pageable, SaleRequest saleRequest) {
 
 		//顧客名・ステータスに値がない場合
 		if(saleRequest.getSearchClient()==""&&saleRequest.getSearchStatus()==""){
-			return searchRepository.findAll(pageable, saleRequest.getSearchSomething());
+			return searchRepository.findAll(pageable, saleRequest.getSearchSubject());
 
 		//顧客名に値がなく、ステータスに値がある場合
 		}else if(saleRequest.getSearchClient()=="") {
-			return searchRepository.findIntAll(pageable, saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
+			return searchRepository.findIntAll(pageable, saleRequest.getSearchStatus(), saleRequest.getSearchSubject());
 
 		//顧客名に値があり、ステータスに値がない場合
 		}else if(saleRequest.getSearchStatus()=="") {
-			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchSomething());
+			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchSubject());
 
 		//顧客名・ステータスに値がある場合
 		}else {
-			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
+			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSubject());
 		}
 	}
 

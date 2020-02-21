@@ -25,61 +25,61 @@
 			<div  class="center">
 				<a>顧客:<select name="searchClient">
 					<option value="">---------</option>
-					<option th:each="cli : ${status}" th:object="${cli}" th:text="*{client}" th:value="${cli.client}" th:selected="${cli.client} == ${saleRequest.searchClient}"></option>
+					<option th:each="cli : ${clientList}" th:object="${cli}" th:text="*{client}" th:value="${cli.client}" th:selected="${cli.client} == ${saleRequest.searchClient}"></option>
 				</select></a><br>
 
 				<a>ステータス:<select name="searchStatus">
 					<option value="">---------</option>
-					<option th:each="sta : ${statusNumber}" th:object="${sta}" th:text="*{status}" th:value="${sta.status_numbers}" th:selected="${sta.status_numbers} == ${saleRequest.searchStatus}"></option>
+					<option th:each="sta : ${statusAndStatusNumber}" th:object="${sta}" th:text="*{status}" th:value="${sta.status_numbers}" th:selected="${sta.status_numbers} == ${saleRequest.searchStatus}"></option>
 				</select></a>
 			</div>
 
 			<div  class="right">
-				<p>件名:&emsp; <input th:field="*{searchSomething}"><br>
+				<p>件名:&emsp; <input th:field="*{searchSubject}"><br>
 				<input type="submit" value="検索"></p>
 			</div>
 		</form>
 
 		<!-- ページングボタン -->
-        <form method="post" name="btnFirst" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="formFirst" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
         	<span th:if='${page.firstPage}'>&lt;&lt;</span>
 		    <input type="hidden" name="page" value="0">
-		    <a th:if='${not page.firstPage}' href="javascript:btnFirst.submit()">&lt;&lt;</a>
+		    <a th:if='${not page.firstPage}' href="javascript:formFirst.submit()">&lt;&lt;</a>
 		</form>
-        <form method="post" name="btnPrev" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="formPrev" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
         	<span th:if='${page.firstPage}'>&lt;</span>
 		    <input type="hidden" name="page" th:value="${page.number-2}">
-		    <a th:if='${not page.firstPage}' href="javascript:btnPrev.submit()">&lt;</a>
+		    <a th:if='${not page.firstPage}' href="javascript:formPrev.submit()">&lt;</a>
 		</form>
-        <form th:each='item : ${page.items}' method="post" th:name="'btn_' + ${item.number}" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form th:each='item : ${page.items}' method="post" th:name="'form_' + ${item.number}" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
 		    <span th:if='${item.current}' th:text='${item.number}'></span>
 		    <input type="hidden" name="page" th:value="${item.number-1}">
-        	<a th:if='${not item.current}' th:text='${item.number}' th:href='@{javascript:btn_{btn}.submit()(btn=${item.number})}'></a>
+        	<a th:if='${not item.current}' th:text='${item.number}' th:href='@{javascript:form_{form}.submit()(form=${item.number})}'></a>
 		</form>
-        <form method="post" name="btnNext" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="formNext" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
             <span th:if='${not page.hasNextPage}'>&gt;</span>
 		    <input type="hidden" name="page" th:value="${page.number}">
-		    <a th:if='${page.hasNextPage}' href="javascript:btnNext.submit()">&gt;</a>
+		    <a th:if='${page.hasNextPage}' href="javascript:formNext.submit()">&gt;</a>
 		</form>
-        <form method="post" name="btnLast" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="formLast" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
             <span th:if='${not page.hasNextPage}'>&gt;&gt;</span>
 		    <input type="hidden" name="page" th:value="${page.totalPages - 1}">
-		    <a th:if='${not page.lastPage}' href="javascript:btnLast.submit()">&gt;&gt;</a>
+		    <a th:if='${not page.lastPage}' href="javascript:formLast.submit()">&gt;&gt;</a>
 		</form>
 
 
@@ -102,7 +102,7 @@
 			</thead>
 
 			<tbody>
-	            <tr th:each="cus : ${list}" th:object="${cus}">
+	            <tr th:each="cus : ${allClientList}" th:object="${cus}">
 	                <td th:text="*{no}"/>
 	                <td th:text="*{client}"/>
 	                <td th:if='*{order_date!=""}' th:text="*{order_date.substring(0,4)} + '/' + *{order_date.substring(4,6)} + '/' + *{order_date.substring(6,8)}"></td>
@@ -140,43 +140,43 @@
         </table>
 
 		<!-- ページングボタン -->
-        <form method="post" name="BtnFirst" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="FormFirst" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
         	<span th:if='${page.firstPage}'>&lt;&lt;</span>
-		    <a th:if='${not page.firstPage}' href="javascript:BtnFirst.submit()">&lt;&lt;</a>
+		    <a th:if='${not page.firstPage}' href="javascript:FormFirst.submit()">&lt;&lt;</a>
 		    <input type="hidden" name="page" value="0">
 		</form>
-        <form method="post" name="BtnPrev" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="FormPrev" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
         	<span th:if='${page.firstPage}'>&lt;</span>
-		    <a th:if='${not page.firstPage}' href="javascript:BtnPrev.submit()">&lt;</a>
+		    <a th:if='${not page.firstPage}' href="javascript:FormPrev.submit()">&lt;</a>
 		    <input type="hidden" name="page" th:value="${page.number-2}">
 		</form>
-        <form th:each='item : ${page.items}' method="post" th:name="'Btn_' + ${item.number}" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form th:each='item : ${page.items}' method="post" th:name="'Form_' + ${item.number}" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden"><span th:if='${item.current}' th:text='${item.number}'></span>
-        	<a th:if='${not item.current}' th:text='${item.number}' th:href='@{javascript:Btn_{btn}.submit()(btn=${item.number})}'></a>
+        	<a th:if='${not item.current}' th:text='${item.number}' th:href='@{javascript:Form_{Form}.submit()(Form=${item.number})}'></a>
 		    <input type="hidden" name="page" th:value="${item.number-1}">
 		</form>
-        <form method="post" name="BtnNext" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="FormNext" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
             <span th:if='${not page.hasNextPage}'>&gt;</span>
-		    <a th:if='${page.hasNextPage}' href="javascript:BtnNext.submit()">&gt;</a>
+		    <a th:if='${page.hasNextPage}' href="javascript:FormNext.submit()">&gt;</a>
 		    <input type="hidden" name="page" th:value="${page.number}">
 		</form>
-        <form method="post" name="BtnLast" action="/page" style="display:inline">
-		    <input th:field="*{saleRequest.searchSomething}" type="hidden">
+        <form method="post" name="FormLast" action="/page" style="display:inline">
+		    <input th:field="*{saleRequest.searchSubject}" type="hidden">
 		    <input th:field="*{saleRequest.searchClient}" type="hidden">
 		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
             <span th:if='${not page.hasNextPage}'>&gt;&gt;</span>
-		    <a th:if='${not page.lastPage}' href="javascript:BtnLast.submit()">&gt;&gt;</a>
+		    <a th:if='${not page.lastPage}' href="javascript:FormLast.submit()">&gt;&gt;</a>
 		    <input type="hidden" name="page" th:value="${page.totalPages - 1}">
 		</form>
 
