@@ -149,23 +149,40 @@ public class SaleService {
 	    return statusRepository.findAll();
 	}
 	public Page<Client> searchAll(Pageable pageable, SaleRequest saleRequest) {
+
+		//顧客名・ステータスに値がない場合
 		if(saleRequest.getSearchClient()==""&&saleRequest.getSearchStatus()==""){
 			return searchRepository.findAll(pageable, saleRequest.getSearchSomething());
+
+		//顧客名に値がなく、ステータスに値がある場合
 		}else if(saleRequest.getSearchClient()=="") {
 			return searchRepository.findIntAll(pageable, saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
+
+		//顧客名に値があり、ステータスに値がない場合
 		}else if(saleRequest.getSearchStatus()=="") {
 			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchSomething());
+
+		//顧客名・ステータスに値がある場合
 		}else {
 			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSomething());
 		}
 	}
 
+	/**
+	 * ステータス更新・新規登録
+	 *
+	 * @param saleRequest
+	 */
 	public void status(SaleRequest saleRequest) {
 
 		Status status = new Status();
+
+		//新規登録
 		if(saleRequest.getStatus_numbers()=="") {
 			status.setStatus(saleRequest.getStatus());
 			status.setDelete_flgs("0");
+
+		//更新
 		}else {
 			status.setStatus(saleRequest.getStatus());
 			status.setStatus_numbers(saleRequest.getStatus_numbers());
@@ -175,6 +192,11 @@ public class SaleService {
 		statusNumberRepository.save(status);
 	}
 
+	/**
+	 * ステータス論理削除
+	 *
+	 * @param saleRequest
+	 */
 	public void statusdelete(SaleRequest saleRequest) {
 
 		Status status = new Status();

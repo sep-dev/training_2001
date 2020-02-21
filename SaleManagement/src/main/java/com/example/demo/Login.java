@@ -11,6 +11,10 @@ import org.hibernate.annotations.Where;
 
 import lombok.Data;
 
+/**
+ * @author yamasakitakumi1190
+ * ログイン情報エンティティー
+ */
 @Data
 @Entity
 @Table(name="login")

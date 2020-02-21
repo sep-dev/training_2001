@@ -380,6 +380,13 @@ public class SaleController {
         return "main";
     }
 
+    /**
+     * ステータス更新画面へ遷移
+     *
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value = "/status")
     public String status(Model model,
     		SaleRequest saleRequest) {
@@ -388,6 +395,15 @@ public class SaleController {
         return "status";
     }
 
+    /**
+     * ステータス更新・登録処理
+     *
+     * @param status
+     * @param status_numbers
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value="/statuscheck")
     public String check(@RequestParam("status") String status,
     		@RequestParam("status_numbers") String status_numbers,
@@ -400,6 +416,13 @@ public class SaleController {
     	return "redirect:/main";
     }
 
+    /**
+     * ステータス削除確認画面へ遷移
+     *
+     * @param status_numbers
+     * @param model
+     * @return
+     */
     @PostMapping(value="/statusdelete")
     public String statusdelete(
     		@RequestParam("status_numbers") String status_numbers,
@@ -410,6 +433,15 @@ public class SaleController {
     	return "statusdelete";
     }
 
+    /**
+     * ステータス削除処理
+     *
+     * @param status_numbers
+     * @param status
+     * @param model
+     * @param saleRequest
+     * @return
+     */
     @PostMapping(value="/statusdeleteOK")
     public String statusdeleteok(
     		@RequestParam("status_numbers") String status_numbers,

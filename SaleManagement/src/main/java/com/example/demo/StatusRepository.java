@@ -6,6 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author yamasakitakumi1190
+ * 顧客名・ステータスプルダウン作成用レポジトリ
+ */
 @Repository
 @Mapper
 public interface StatusRepository{

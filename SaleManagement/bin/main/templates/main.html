@@ -128,8 +128,6 @@
 		                <th:block th:if='*{order_amount!=""}' th:text="'&yen;' + ${#numbers.formatInteger(cus.order_amount, 3, 'COMMA')}"/>
 		                <th:block th:if='*{order_amount==""}' th:text="'-'"/>
 	                </td>
-<!--	                <td th:text="*{status}"/>
- -->
 
 	                <td th:if='*{delete_flgs=="0"}' th:text="*{status}"/>
 	                <td th:if='*{delete_flgs=="1"}'></td>

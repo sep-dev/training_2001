@@ -25,6 +25,10 @@ public class Status implements Serializable{
     private String status;
     private String delete_flgs;
 
+    /**
+     * clientテーブルと結合
+     * 参照オブジェクトを"status_number"に指定
+     */
     @OneToMany(mappedBy = "status_number")
     private List<Client> clientList;
 }

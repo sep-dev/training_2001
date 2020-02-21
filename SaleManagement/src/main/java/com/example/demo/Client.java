@@ -38,6 +38,10 @@ public class Client {
     private String delete_flg;
     private String remarks;
 
+    /**
+     * status_masterテーブルと結合
+     * clientテーブルに"status"と"delete_flgs"を追加
+     */
     @ManyToOne
     @JoinColumn(name = "status_number", referencedColumnName = "status_numbers", insertable = false, updatable = false)
     private Status status;
