@@ -450,7 +450,6 @@ public class SaleController {
     		Model model ,
     		SaleRequest saleRequest) {
     	if(status=="") {
-
     		return "redirect:/main";
     	}
     	model.addAttribute("status",  status);
@@ -471,6 +470,9 @@ public class SaleController {
     public String statusDeleteCheck(
     		@RequestParam("status_numbers") String status_numbers,
     		Model model) {
+    	if(status_numbers=="") {
+    		return "redirect:/main";
+    	}
     	Status list=saleService.getOneStatus(status_numbers);
     	model.addAttribute("list", list);
 
