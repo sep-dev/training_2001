@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -56,6 +58,51 @@ public interface SearchRepository extends JpaRepository<Client, String>{
 			)
 	public Page<Client> findAll(
 			Pageable pageable,
+			@Param("searchSomething") String searchSomething);
+
+
+	//顧客名・ステータスに値がある場合
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.client =  :searchClient "
+			+ "AND c.status_number =  :searchStatus  "
+			+ "AND c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
+	public List<Client> findAll(
+			@Param("searchClient") String searchClient,
+			@Param("searchStatus") String searchStatus,
+			@Param("searchSomething") String searchSomething);
+
+	//顧客名に値があり、ステータスに値がない場合
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.status_number =  :searchStatus "
+			+ "AND c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
+	public List<Client> findIntAll(
+			@Param("searchStatus") String searchStatus,
+			@Param("searchSomething") String searchSomething);
+
+	//顧客名に値がなく、ステータスに値がある場合
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.client =  :searchClient "
+			+ "AND c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
+	public List<Client> findAll(
+			@Param("searchClient") String searchClient,
+			@Param("searchSomething") String searchSomething);
+
+	//顧客名・ステータスに値がない場合
+	@Query(value="SELECT c "
+			+ "FROM Client c "
+			+ "WHERE c.delete_flg = 0 "
+			+ "AND c.subject like %:searchSomething%"
+			)
+	public List<Client> findAll(
 			@Param("searchSomething") String searchSomething);
 
 }

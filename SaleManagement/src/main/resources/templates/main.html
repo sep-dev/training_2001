@@ -22,7 +22,7 @@
 		<!-- 検索ボタン -->
 		<h1 class="search">検索</h1>
 		<form th:object="${saleRequest}" action="/search" method="post">
-			<div  class="center">
+			<div class="center">
 				<a>顧客:<select name="searchClient">
 					<option value="">---------</option>
 					<option th:each="cli : ${clientList}" th:object="${cli}" th:text="*{client}" th:value="${cli.client}" th:selected="${cli.client} == ${saleRequest.searchClient}"></option>
@@ -34,7 +34,7 @@
 				</select></a>
 			</div>
 
-			<div  class="right">
+			<div class="right">
 				<p>件名:&emsp; <input th:field="*{searchSubject}"><br>
 				<input type="submit" value="検索"></p>
 			</div>
@@ -81,7 +81,6 @@
 		    <input type="hidden" name="page" th:value="${page.totalPages - 1}">
 		    <a th:if='${not page.lastPage}' href="javascript:formLast.submit()">&gt;&gt;</a>
 		</form>
-
 
 		<!-- テーブル -->
         <table>
@@ -180,10 +179,12 @@
 		    <input type="hidden" name="page" th:value="${page.totalPages - 1}">
 		</form>
 
-
-	   	<!-- 登録ボタン -->
-		<form action="/insert" method="post">
-			<p><input type="submit" value="新規登録"></p>
+	   	<!-- CSV出力ボタン -->
+		<form action="/csv" method="post">
+			<input th:field="*{saleRequest.searchSubject}" type="hidden">
+		    <input th:field="*{saleRequest.searchClient}" type="hidden">
+		    <input th:field="*{saleRequest.searchStatus}" type="hidden">
+			<p><input type="submit" value="CSV出力"></p>
 		</form>
     </body>
 </html>

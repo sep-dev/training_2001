@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +21,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+
 @Controller
 public class SaleController {
     @Autowired
     SaleService saleService;
+    @Autowired
+    DownloadHelper downloadHelper;
 
     /**
      * ログイン画面表示
@@ -57,6 +71,7 @@ public class SaleController {
             	model.addAttribute("mail_address",
             			mail_address);
             	model.addAttribute("password",  password);
+
             	return "login";
     		}
     	}
@@ -99,7 +114,8 @@ public class SaleController {
      * @return
      */
     @PostMapping(value="/insert")
-    public String insert(Model model) {
+    public String insert(
+    		Model model) {
         model.addAttribute("saleRequest", new SaleRequest());
 
         List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
@@ -193,6 +209,7 @@ public class SaleController {
     		Model model) {
         Client list = saleService.getOneClient(no);
         model.addAttribute("list", list);
+
     	return "delete";
     }
 
@@ -362,8 +379,10 @@ public class SaleController {
             SaleWrapper<Client> page = new SaleWrapper<Client>(allClientList);
             model.addAttribute("allClientList", allClientList);
             model.addAttribute("page", page);
+
 	        List<Client> clientList = saleService.findClientList();
 	        model.addAttribute("clientList", clientList);
+
 	        List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
 	        model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
 
@@ -387,9 +406,11 @@ public class SaleController {
         SaleWrapper<Client> page = new SaleWrapper<Client>(allClientList);
         model.addAttribute("allClientList", allClientList);
         model.addAttribute("page", page);
+
         List<Client> clientList = saleService.findClientList();
         model.addAttribute("clientList", clientList);
         model.addAttribute("searchSubject", saleRequest.searchSubject);
+
         List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
         model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
 
@@ -409,6 +430,7 @@ public class SaleController {
     		SaleRequest saleRequest) {
     	List<Status> statusAndStatusNumber = saleService.findStatusAndStatusNumber();
         model.addAttribute("statusAndStatusNumber", statusAndStatusNumber);
+
         return "status";
     }
 
@@ -428,6 +450,7 @@ public class SaleController {
     		Model model ,
     		SaleRequest saleRequest) {
     	if(status=="") {
+
     		return "redirect:/main";
     	}
     	model.addAttribute("status",  status);
@@ -474,5 +497,45 @@ public class SaleController {
     	saleService.statusdelete(saleRequest);
 
     	return "redirect:/main";
+    }
+
+    /**
+     * CSV出力する内容
+     *
+     * @param saleRequest
+     * @return
+     * @throws JsonProcessingException
+     */
+    public String getCsvText(
+    		SaleRequest saleRequest) throws JsonProcessingException {
+        CsvMapper mapper = new CsvMapper();
+        mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
+        CsvSchema schema = mapper.schemaFor(CSVClient.class).withHeader();
+        List<CSVClient> members = new ArrayList<CSVClient>();
+        List<Client> clientList = saleService.searchList(saleRequest);
+
+        for(Client value : clientList)
+        {
+        	members.add(new CSVClient(value.getNo(),value.getClient(),value.getOrder_date(),value.getS_number(),value.getSubject(),value.getQuantity(),value.getDelivery_date(),value.getDue_date(),value.getBilling_date(),value.getEstimated_amount(),value.getOrder_amount(),value.getStatus()));
+        }
+
+        return mapper.writer(schema).writeValueAsString(members);
+    }
+
+    /**
+     * CSV出力処理
+     *
+     * @param saleRequest
+     * @return
+     * @throws IOException
+     */
+    @PostMapping(value="/csv")
+    public  ResponseEntity<byte[]> download(
+    		SaleRequest saleRequest) throws IOException {
+        HttpHeaders headers = new HttpHeaders();
+        Calendar cl = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        downloadHelper.addContentDisposition(headers, sdf.format(cl.getTime())+".csv");
+        return new ResponseEntity<>(getCsvText(saleRequest).getBytes(), headers, HttpStatus.OK);
     }
 }

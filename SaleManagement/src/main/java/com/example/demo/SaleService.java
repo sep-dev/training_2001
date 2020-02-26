@@ -77,7 +77,12 @@ public class SaleService {
 		return displayRepository.getOne(no);
 	}
 
-
+	/**
+	 * ステータステーブルのstatus_numbers取得
+	 *
+	 * @param status_numbers
+	 * @return
+	 */
 	public Status getOneStatus(String status_numbers) {
 		return statusNumberRepository.getOne(status_numbers);
 	}
@@ -137,17 +142,29 @@ public class SaleService {
 	}
 
 	/**
-	 * 部分検索時のテーブル取得
+	 * 顧客のプルダウンリスト取得
 	 *
-	 * @param saleRequest
 	 * @return
 	 */
 	public List<Client> findClientList() {
 	    return statusRepository.findByClient();
 	}
+
+	/**
+	 * ステータスのプルダウンリスト取得
+	 *
+	 * @return
+	 */
 	public List<Status> findStatusAndStatusNumber() {
 	    return statusRepository.findAll();
 	}
+
+	/**
+	 * 部分検索時のテーブル取得
+	 *
+	 * @param saleRequest
+	 * @return
+	 */
 	public Page<Client> search(Pageable pageable, SaleRequest saleRequest) {
 
 		//顧客名・ステータスに値がない場合
@@ -165,6 +182,32 @@ public class SaleService {
 		//顧客名・ステータスに値がある場合
 		}else {
 			return searchRepository.findAll(pageable, saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSubject());
+		}
+	}
+
+	/**
+	 * ページングされていない検索情報取得(CSV出力時に使用)
+	 *
+	 * @param saleRequest
+	 * @return
+	 */
+	public List<Client> searchList(SaleRequest saleRequest) {
+
+		//顧客名・ステータスに値がない場合
+		if(saleRequest.getSearchClient()==""&&saleRequest.getSearchStatus()==""){
+			return searchRepository.findAll(saleRequest.getSearchSubject());
+
+		//顧客名に値がなく、ステータスに値がある場合
+		}else if(saleRequest.getSearchClient()=="") {
+			return searchRepository.findIntAll(saleRequest.getSearchStatus(), saleRequest.getSearchSubject());
+
+		//顧客名に値があり、ステータスに値がない場合
+		}else if(saleRequest.getSearchStatus()=="") {
+			return searchRepository.findAll(saleRequest.getSearchClient(), saleRequest.getSearchSubject());
+
+		//顧客名・ステータスに値がある場合
+		}else {
+			return searchRepository.findAll(saleRequest.getSearchClient(), saleRequest.getSearchStatus(), saleRequest.getSearchSubject());
 		}
 	}
 
